@@ -1,0 +1,7 @@
+{
+  "name": "AplicativoAvaliacaoAcessibilidadeOA",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
