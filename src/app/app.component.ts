@@ -3,11 +3,13 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
+//import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {AboutPage} from "../pages/about/about";
+//import {FileChooserPage} from "../pages/file-chooser/file-chooser";
+import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 
 
 @Component({
@@ -31,7 +33,8 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Início', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage },
+      { title: 'Avaliar OA', component: LoEvaluationPage },
+      //{ title: 'My First List', component: ListPage },
       { title: 'Sobre', component: AboutPage }
     ];
   }
