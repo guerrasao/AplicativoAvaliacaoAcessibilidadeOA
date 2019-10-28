@@ -33,7 +33,7 @@ export class ValidateFileExtensionPage {
       this.hasErro = this.erro.toString();
     }
     if(this.tmpFile != null){
-      this.hasFile = this.tmpFile.name;
+      this.hasFile = this.tmpFile;
     }
   }
 
