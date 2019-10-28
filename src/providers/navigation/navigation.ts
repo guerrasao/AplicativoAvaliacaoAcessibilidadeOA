@@ -17,4 +17,16 @@ export class NavigationProvider {
   public pushPageNoParam(navCtrl: NavController, navParams: NavParams, page : any){
     return navCtrl.push(page);
   }
+
+  public pushPageParams(navCtrl: NavController, navParams: NavParams, page : any, params : any = {}){
+    return navCtrl.push(page,params);
+  }
+
+  public popPage(navCtrl: NavController, navParams: NavParams){
+    return navCtrl.pop();
+  }
+
+  public popToRoot(navCtrl: NavController, navParams: NavParams){
+    return navCtrl.popToRoot();
+  }
 }
