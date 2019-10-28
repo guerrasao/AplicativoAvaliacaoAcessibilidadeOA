@@ -16,6 +16,8 @@ import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 import { NavigationProvider } from '../providers/navigation/navigation';
 import {Chooser} from "@ionic-native/chooser";
 import {ValidateFileExtensionPage} from "../pages/validate-file-extension/validate-file-extension";
+import {SQLite} from "@ionic-native/sqlite";
+import { ErrorDisplayProvider } from '../providers/error-display/error-display';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {ValidateFileExtensionPage} from "../pages/validate-file-extension/valida
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DbProvider,
     NavigationProvider,
-    Chooser
+    Chooser,
+    SQLite,
+    ErrorDisplayProvider
   ]
 })
 export class AppModule {}
