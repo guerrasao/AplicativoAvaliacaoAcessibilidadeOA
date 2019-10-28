@@ -15,6 +15,7 @@ import {FileChooserPage} from "../pages/file-chooser/file-chooser";
 import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 import { NavigationProvider } from '../providers/navigation/navigation';
 import {Chooser} from "@ionic-native/chooser";
+import {ValidateFileExtensionPage} from "../pages/validate-file-extension/validate-file-extension";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {Chooser} from "@ionic-native/chooser";
     ListPage,
     AboutPage,
     FileChooserPage,
-    LoEvaluationPage
+    LoEvaluationPage,
+    ValidateFileExtensionPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import {Chooser} from "@ionic-native/chooser";
     ListPage,
     AboutPage,
     FileChooserPage,
-    LoEvaluationPage
+    LoEvaluationPage,
+    ValidateFileExtensionPage
   ],
   providers: [
     StatusBar,

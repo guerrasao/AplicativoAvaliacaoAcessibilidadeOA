@@ -13,9 +13,9 @@ Desenvolvimento de um aplicativo mobile para avaliar a acessibilidade de Objetos
 ## Softwares e Tecnologias Utilizados
 * Extração de Parâmetros : https://github.com/Julianaf/ExtracaoDeParametros
 * IONIC{
-   ionic (Ionic CLI)  : 4.0.5
-   Ionic Framework    : ionic-angular 3.9.5
-   @ionic/app-scripts : 3.2.2
+   ionic (Ionic CLI)  : 4.0.5, 
+   Ionic Framework    : ionic-angular 3.9.5, 
+   @ionic/app-scripts : 3.2.2, 
 }
 * Cordova{
    cordova (Cordova CLI) : 8.0.0

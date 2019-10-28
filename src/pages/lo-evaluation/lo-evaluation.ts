@@ -20,7 +20,7 @@ export class LoEvaluationPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoEvaluationPage');
+    //console.log('ionViewDidLoad LoEvaluationPage');
   }
 
   pushPageFileChooser(){
