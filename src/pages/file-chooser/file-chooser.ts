@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Chooser } from '@ionic-native/chooser';
 
 /**
  * Generated class for the FileChooserPage page.
@@ -14,11 +15,18 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class FileChooserPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private chooser: Chooser) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FileChooserPage');
+
+  }
+
+  openFileChooser(){
+    this.chooser.getFile("application/epub+zip,application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+      .then(file => console.log(file ? file.name : 'canceled'))
+      .catch((error: any) => console.error(error));
+
   }
 
 }

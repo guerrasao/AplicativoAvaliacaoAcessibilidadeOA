@@ -14,6 +14,7 @@ import {AboutPage} from "../pages/about/about";
 import {FileChooserPage} from "../pages/file-chooser/file-chooser";
 import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 import { NavigationProvider } from '../providers/navigation/navigation';
+import {Chooser} from "@ionic-native/chooser";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NavigationProvider } from '../providers/navigation/navigation';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DbProvider,
-    NavigationProvider
+    NavigationProvider,
+    Chooser
   ]
 })
 export class AppModule {}
