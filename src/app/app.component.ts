@@ -10,7 +10,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {AboutPage} from "../pages/about/about";
 //import {FileChooserPage} from "../pages/file-chooser/file-chooser";
 import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
-
+import {DbProvider} from "../providers/db/db";
+import {ErrorDisplayProvider} from "../providers/error-display/error-display";
 
 @Component({
   templateUrl: 'app.html'
@@ -19,14 +20,17 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = HelloIonicPage;
+  // rootPage = HelloIonicPage;
+  rootPage = null;
   pages: Array<{title: string, component: any}>;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public dbProvider : DbProvider,
+    public errorDisplay : ErrorDisplayProvider
   ) {
     this.initializeApp();
 
@@ -44,8 +48,15 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.dbProvider.createDB().then(() => {
+        this.openRootPage();
+      }).catch(e => this.errorDisplay.presentAlertError(e));
     });
+  }
+
+  openRootPage(){
+    this.splashScreen.hide();
+    this.rootPage = HelloIonicPage;
   }
 
   openPage(page) {

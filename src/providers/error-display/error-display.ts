@@ -15,12 +15,13 @@ export class ErrorDisplayProvider {
   }
 
   presentAlertError(error : any) {
-    let alert = this.alertCtrl.create({
-      title: 'Erro:',
-      subTitle: formattedError(error).toString(),
-      buttons: ['OK']
-    });
-    alert.present();
+    // let alert = this.alertCtrl.create({
+    //   title: 'Erro',
+    //   subTitle: formattedError(error).toString(),
+    //   buttons: ['OK']
+    // });
+    // alert.present();
+    alert(error);
   }
 
   presentAlert(titleAlert : string, content : any){
@@ -30,5 +31,16 @@ export class ErrorDisplayProvider {
       buttons: ['OK']
     });
     alert.present();
+    //alert(content);
+  }
+
+  presentAlertWarning(content : any){
+    let alert = this.alertCtrl.create({
+      title: 'Aviso',
+      subTitle: content.toString(),
+      buttons: ['OK']
+    });
+    alert.present();
+    //alert(content);
   }
 }
