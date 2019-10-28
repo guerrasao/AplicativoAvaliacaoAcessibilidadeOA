@@ -16,4 +16,7 @@
 <ion-content padding>
   <p>Instruções...</p>
   <button ion-button (click)="openFileChooser()" >Selecionar Arquivo</button>
+  <p *ngIf="errorr">{{errorr}}</p>
+  <p *ngIf="tmpFile">{{tmpFile.name}}</p>
+  <button ion-button *ngIf="tmpFile" (click)="nextPage()" >Próximo</button>
 </ion-content>

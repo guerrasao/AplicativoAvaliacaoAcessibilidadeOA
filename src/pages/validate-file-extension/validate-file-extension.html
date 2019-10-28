@@ -14,5 +14,6 @@
 </ion-header>
 
 <ion-content padding>
-<!--  *ngIf="newTrustFormVisible"-->
+  <p *ngIf="hasErro">Erro: {{hasErro}}</p>
+  <p *ngIf="hasFile">Nome do Arquivo: {{hasFile}}</p>
 </ion-content>

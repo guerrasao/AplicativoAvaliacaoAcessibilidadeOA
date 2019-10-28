@@ -13,16 +13,28 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'validate-file-extension.html',
 })
 export class ValidateFileExtensionPage {
-
+  public erro : any;
+  public tmpFile : any;
+  public hasErro : any;
+  public hasFile : any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    //console.log('ionViewDidLoad ValidateFileExtensionPage');
+
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad ValidateFileExtensionPage');
+
   }
 
   ionViewDidEnter(){
-    
+    this.erro = this.navParams.get("errorr");
+    this.tmpFile = this.navParams.get("tempFile");
+    if(this.erro != null) {
+      this.hasErro = this.erro.toString();
+    }
+    if(this.tmpFile != null){
+      this.hasFile = this.tmpFile.name;
+    }
   }
 
 }

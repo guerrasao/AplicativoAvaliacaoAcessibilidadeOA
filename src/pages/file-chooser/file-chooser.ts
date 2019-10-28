@@ -16,7 +16,9 @@ import {ValidateFileExtensionPage} from "../validate-file-extension/validate-fil
   templateUrl: 'file-chooser.html',
 })
 export class FileChooserPage {
-
+  public nav = new NavigationProvider();
+  public tmpFile : any = null;
+  public errorr : any = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, private chooser: Chooser) {
   }
 
@@ -25,18 +27,16 @@ export class FileChooserPage {
   }
 
   openFileChooser(){
-    let nav = new NavigationProvider();
-    let tmpFile : any = undefined;
-    let erro : any = undefined;
-
     this.chooser.getFile("application/epub+zip,application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-      .then(file => tmpFile = file)
-      .catch((error: any) => erro = error);
+      .then(file => this.tmpFile = file)
+      .catch((error: any) => this.errorr = error);
+  }
 
-    if(erro != undefined){
-      nav.pushPageParams(this.navCtrl, this.navParams, ValidateFileExtensionPage, {erro, undefined});
+  nextPage(){
+    if(this.errorr != null){
+      this.nav.pushPageParams(this.navCtrl, this.navParams, ValidateFileExtensionPage, {errorr : this.errorr, tempFile : null});
     }else{
-      nav.pushPageParams(this.navCtrl, this.navParams, ValidateFileExtensionPage, {undefined, tmpFile});
+      this.nav.pushPageParams(this.navCtrl, this.navParams, ValidateFileExtensionPage, {errorr : null, tempFile : this.tmpFile});
     }
   }
 
