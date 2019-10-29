@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import {formattedError} from "@angular/compiler";
+//import {formattedError} from "@angular/compiler";
 /*
   Generated class for the ErrorDisplayProvider provider.
 
