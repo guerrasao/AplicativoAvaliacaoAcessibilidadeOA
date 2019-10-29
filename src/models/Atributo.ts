@@ -1,11 +1,11 @@
 export class Atributo {
   private idAtributo : number;
-  private descricaiAtributo : string;
+  private descricaoAtributo : string;
   private idMidia : number;
 
-  constructor(idAtributo? : number, descricaiAtributo? : string, idMidia? : number) {
+  constructor(idAtributo? : number, descricaoAtributo? : string, idMidia? : number) {
     this.idAtributo = idAtributo;
-    this.descricaiAtributo = descricaiAtributo;
+    this.descricaoAtributo = descricaoAtributo;
     this.idMidia = idMidia;
   }
 
@@ -18,11 +18,11 @@ export class Atributo {
   }
 
   public getDescricaiAtributo(): string {
-    return this.descricaiAtributo;
+    return this.descricaoAtributo;
   }
 
   public setDescricaiAtributo(value: string) {
-    this.descricaiAtributo = value;
+    this.descricaoAtributo = value;
   }
 
   public getIdMidia(): number {

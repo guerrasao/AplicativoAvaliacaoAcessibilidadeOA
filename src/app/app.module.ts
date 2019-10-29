@@ -18,6 +18,14 @@ import {Chooser} from "@ionic-native/chooser";
 import {ValidateFileExtensionPage} from "../pages/validate-file-extension/validate-file-extension";
 import {SQLite} from "@ionic-native/sqlite";
 import { ErrorDisplayProvider } from '../providers/error-display/error-display';
+import { OaDaoProvider } from '../providers/oa-dao/oa-dao';
+import { MidiaDaoProvider } from '../providers/midia-dao/midia-dao';
+import { MidiaOaDaoProvider } from '../providers/midia-oa-dao/midia-oa-dao';
+import { RegraDaoProvider } from '../providers/regra-dao/regra-dao';
+import { DeficienciaDaoProvider } from '../providers/deficiencia-dao/deficiencia-dao';
+import { AtributoDaoProvider } from '../providers/atributo-dao/atributo-dao';
+import { DiretrizDaoProvider } from '../providers/diretriz-dao/diretriz-dao';
+import { DeficienciaHasOaDaoProvider } from '../providers/deficiencia-has-oa-dao/deficiencia-has-oa-dao';
 
 @NgModule({
   declarations: [
@@ -53,7 +61,15 @@ import { ErrorDisplayProvider } from '../providers/error-display/error-display';
     NavigationProvider,
     Chooser,
     SQLite,
-    ErrorDisplayProvider
+    ErrorDisplayProvider,
+    OaDaoProvider,
+    MidiaDaoProvider,
+    MidiaOaDaoProvider,
+    RegraDaoProvider,
+    DeficienciaDaoProvider,
+    AtributoDaoProvider,
+    DiretrizDaoProvider,
+    DeficienciaHasOaDaoProvider
   ]
 })
 export class AppModule {}
