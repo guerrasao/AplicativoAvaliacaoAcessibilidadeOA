@@ -1,5 +1,3 @@
-import {Midia} from "./Midia";
-
 export class Diretriz {
   private idDiretriz : number;
   private descricaoDiretriz : string;
