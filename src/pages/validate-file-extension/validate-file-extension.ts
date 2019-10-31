@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { HTTP } from '@ionic-native/http';
 
 /**
  * Generated class for the ValidateFileExtensionPage page.
@@ -17,7 +18,7 @@ export class ValidateFileExtensionPage {
   public tmpFile : any;
   public hasErro : any;
   public hasFile : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HTTP) {
     //console.log('ionViewDidLoad ValidateFileExtensionPage');
 
   }
@@ -35,6 +36,11 @@ export class ValidateFileExtensionPage {
     if(this.tmpFile != null){
       this.hasFile = this.tmpFile;
     }
+    this.http.uploadFile('http://192.168.0.111:3001/file/upload', {}, {}, this.hasFile.uri, 'file' ).then( resp => {
+      console.log(resp.data);
+    }).catch(error => {
+      console.error(error);
+    });
   }
 
 }

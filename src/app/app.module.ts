@@ -26,6 +26,7 @@ import { DeficienciaDaoProvider } from '../providers/deficiencia-dao/deficiencia
 import { AtributoDaoProvider } from '../providers/atributo-dao/atributo-dao';
 import { DiretrizDaoProvider } from '../providers/diretriz-dao/diretriz-dao';
 import { DeficienciaHasOaDaoProvider } from '../providers/deficiencia-has-oa-dao/deficiencia-has-oa-dao';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { DeficienciaHasOaDaoProvider } from '../providers/deficiencia-has-oa-dao
     DeficienciaDaoProvider,
     AtributoDaoProvider,
     DiretrizDaoProvider,
-    DeficienciaHasOaDaoProvider
+    DeficienciaHasOaDaoProvider,
+    HTTP
   ]
 })
 export class AppModule {}
