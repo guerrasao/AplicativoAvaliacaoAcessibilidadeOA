@@ -21,7 +21,8 @@ export class ErrorDisplayProvider {
     //   buttons: ['OK']
     // });
     // alert.present();
-    alert(error);
+    console.error(error);
+    //alert(error.toString());
   }
 
   presentAlert(titleAlert : string, content : any){

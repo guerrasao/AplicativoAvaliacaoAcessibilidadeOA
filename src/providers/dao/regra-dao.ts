@@ -19,8 +19,8 @@ export class RegraDaoProvider {
 
   public insert(regra : Regra) : void{
     this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'insert into '+this.table+'(idRegra, idDiretriz, descricaoRegra, regra_if) values (?, ?, ?, ?)';
-      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegra_if()];
+      let sql = 'insert into '+this.table+'(idRegra, idDiretriz, descricaoRegra, regraIf) values (?, ?, ?, ?)';
+      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegraIf()];
       db.executeSql(sql, data).then(() => {
         this.errorDisplay.presentAlertWarning(this.table+" inserido(a)");
       }).catch( e => this.errorDisplay.presentAlertError(e));
@@ -39,8 +39,8 @@ export class RegraDaoProvider {
 
   public update(regra : Regra) : void{
     this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'update '+this.table+' set idRegra = ?, idDiretriz = ?, descricaoRegra = ?, regra_if = ?  where idRegra = ?';
-      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegra_if(), regra.getIdRegra()];
+      let sql = 'update '+this.table+' set idRegra = ?, idDiretriz = ?, descricaoRegra = ?, regraIf = ?  where idRegra = ?';
+      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegraIf(), regra.getIdRegra()];
       db.executeSql(sql, data).then(() => {
         this.errorDisplay.presentAlertWarning(this.table+" atualizado(a)");
       }).catch( e => this.errorDisplay.presentAlertError(e));
@@ -56,7 +56,7 @@ export class RegraDaoProvider {
           let regras = new Array<Regra>();
           for (var i = 0; i < data.rows.length; i++){
             let tmp = data.rows.item(i);
-            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regra_if);
+            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regraIf);
             regras.push(regra);
           }
           return regras;
@@ -83,7 +83,7 @@ export class RegraDaoProvider {
           let regras = new Array<Regra>();
           for (var i = 0; i < data.rows.length; i++){
             let tmp = data.rows.item(i);
-            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regra_if);
+            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regraIf);
             regras.push(regra);
           }
           return regras;

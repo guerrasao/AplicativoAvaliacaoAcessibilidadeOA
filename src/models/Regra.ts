@@ -2,13 +2,13 @@ export class Regra {
   private idRegra : number;
   private idDiretriz : number;
   private descricaoRegra : string;
-  private regra_if : string;
+  private regraIf : string;
 
-  constructor(idRegra? : number, idDiretriz? : number, descricaoRegra? : string, regra_if? : string) {
+  constructor(idRegra? : number, idDiretriz? : number, descricaoRegra? : string, regraIf? : string) {
     this.idRegra = idRegra;
     this.idDiretriz = idDiretriz;
     this.descricaoRegra = descricaoRegra;
-    this.regra_if = regra_if;
+    this.regraIf = regraIf;
   }
 
   public getDescricaoRegra(): string {
@@ -19,12 +19,12 @@ export class Regra {
     this.descricaoRegra = value;
   }
 
-  public getRegra_if(): string {
-    return this.regra_if;
+  public getRegraIf(): string {
+    return this.regraIf;
   }
 
-  public setRegra_if(value: string) {
-    this.regra_if = value;
+  public setRegraIf(value: string) {
+    this.regraIf = value;
   }
 
   public getIdDiretriz(): number {
