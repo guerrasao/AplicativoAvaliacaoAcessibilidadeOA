@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {DbProvider} from "../db/db";
-import {Deficiencia_has_OA} from "../../models/Deficiencia_has_OA";
+import {Diretriz_Deficiencia} from "../../models/Diretriz_Deficiencia";
 
 /*
   Generated class for the DeficienciaHasOaDaoProvider provider.
@@ -9,7 +9,7 @@ import {Deficiencia_has_OA} from "../../models/Deficiencia_has_OA";
   and Angular DI.
 */
 @Injectable()
-export class DeficienciaHasOaDaoProvider {
+export class DiretrizDeficienciaDaoProvider {
 
   constructor(public dbProvider : DbProvider) {
 
@@ -26,7 +26,7 @@ export class DeficienciaHasOaDaoProvider {
 
   }
 
-  public getAll() : Array<Deficiencia_has_OA>{
+  public getAll() : Array<Diretriz_Deficiencia>{
     return null;
   }
 }

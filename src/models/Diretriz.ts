@@ -1,12 +1,14 @@
 export class Diretriz {
   private idDiretriz : number;
-  private descricaoDiretriz : string;
   private idMidia : number;
+  private descricaoDiretriz : string;
+  private recomendacao : string;
 
-  constructor(idDiretriz? : number, descricaoDiretriz? : string, idMidia? : number) {
+  constructor(idDiretriz? : number, idMidia? : number, descricaoDiretriz? : string, recomendacao?: string) {
     this.idDiretriz = idDiretriz;
-    this.descricaoDiretriz = descricaoDiretriz;
     this.idMidia = idMidia;
+    this.descricaoDiretriz = descricaoDiretriz;
+    this.recomendacao = recomendacao;
   }
 
   public getIdDiretriz(): number {
@@ -31,5 +33,13 @@ export class Diretriz {
 
   public setIdMidia(value: number) {
     this.idMidia = value;
+  }
+
+  public getRecomendacao(): string {
+    return this.recomendacao;
+  }
+
+  public setRecomendacao(value : string){
+    this.recomendacao = value;
   }
 }
