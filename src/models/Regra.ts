@@ -1,14 +1,12 @@
 export class Regra {
   private idRegra : number;
   private idDiretriz : number;
-  private idAtributo : number;
   private descricaoRegra : string;
   private regra_if : string;
 
-  constructor(idRegra? : number, idDiretriz? : number, idAtributo?: number, descricaoRegra? : string, regra_if? : string) {
+  constructor(idRegra? : number, idDiretriz? : number, descricaoRegra? : string, regra_if? : string) {
     this.idRegra = idRegra;
     this.idDiretriz = idDiretriz;
-    this.idAtributo = idAtributo;
     this.descricaoRegra = descricaoRegra;
     this.regra_if = regra_if;
   }
@@ -45,11 +43,4 @@ export class Regra {
     this.idRegra = value;
   }
 
-  public getIdAtributo(): number {
-    return this.idAtributo;
-  }
-
-  public setIdAtributo(value: number) {
-    this.idAtributo = value;
-  }
 }

@@ -13,7 +13,7 @@ import {SQLiteObject} from "@ionic-native/sqlite";
 @Injectable()
 export class DeficienciaDaoProvider {
 
-  private table : string = "deficiencia";
+  private table : string = "Deficiencia";
   constructor(public dbProvider : DbProvider, private errorDisplay : ErrorDisplayProvider) {
 
   }

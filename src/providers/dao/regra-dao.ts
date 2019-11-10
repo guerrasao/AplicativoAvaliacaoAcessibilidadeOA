@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {DbProvider} from "../db/db";
 import {Regra} from "../../models/Regra";
+import {ErrorDisplayProvider} from "../error-display/error-display";
+import {SQLiteObject} from "@ionic-native/sqlite";
 
 /*
   Generated class for the RegraDaoProvider provider.
@@ -10,23 +12,92 @@ import {Regra} from "../../models/Regra";
 */
 @Injectable()
 export class RegraDaoProvider {
-
-  constructor(public dbProvider : DbProvider) {
-
-  }
-  public insert() : void{
+  private table : string = "Regra";
+  constructor(public dbProvider : DbProvider, private errorDisplay : ErrorDisplayProvider) {
 
   }
 
-  public remove(id : number) : void{
-
+  public insert(regra : Regra) : void{
+    this.dbProvider.getDB().then((db : SQLiteObject) =>{
+      let sql = 'insert into '+this.table+'(idRegra, idDiretriz, descricaoRegra, regra_if) values (?, ?, ?, ?)';
+      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegra_if()];
+      db.executeSql(sql, data).then(() => {
+        this.errorDisplay.presentAlertWarning(this.table+" inserido(a)");
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+    }).catch( e => this.errorDisplay.presentAlertError(e));
   }
 
-  public update() : void{
+  public remove(idRegra : number) : void{
+    this.dbProvider.getDB().then((db : SQLiteObject) =>{
+      let sql = 'delete from '+this.table+' where idRegra = ?';
+      let data = [idRegra];
+      db.executeSql(sql, data).then(() => {
+        this.errorDisplay.presentAlertWarning(this.table+" removido(a)");
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+    }).catch( e => this.errorDisplay.presentAlertError(e));
+  }
 
+  public update(regra : Regra) : void{
+    this.dbProvider.getDB().then((db : SQLiteObject) =>{
+      let sql = 'update '+this.table+' set idRegra = ?, idDiretriz = ?, descricaoRegra = ?, regra_if = ?  where idRegra = ?';
+      let data = [regra.getIdRegra(), regra.getIdDiretriz(), regra.getDescricaoRegra(), regra.getRegra_if(), regra.getIdRegra()];
+      db.executeSql(sql, data).then(() => {
+        this.errorDisplay.presentAlertWarning(this.table+" atualizado(a)");
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+    }).catch( e => this.errorDisplay.presentAlertError(e));
   }
 
   public getAll() : Array<Regra>{
+    this.dbProvider.getDB().then((db : SQLiteObject) =>{
+      let sql = 'select * from '+this.table;
+      let data : any[];
+      db.executeSql(sql, data).then((data : any) => {
+        if(data.rows.length > 0){
+          let regras = new Array<Regra>();
+          for (var i = 0; i < data.rows.length; i++){
+            let tmp = data.rows.item(i);
+            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regra_if);
+            regras.push(regra);
+          }
+          return regras;
+        } else{
+          return new Array<Regra>();
+        }
+      }).catch( e => {
+        this.errorDisplay.presentAlertError(e);
+        return null;
+      });
+    }).catch( e => {
+      this.errorDisplay.presentAlertError(e);
+      return null;
+    });
+    return null;
+  }
+
+  public getAllWhere(where : String) : Array<Regra> {
+    this.dbProvider.getDB().then((db : SQLiteObject) =>{
+      let sql = 'select * from ' + this.table +' where '+ where;
+      let data : any[];
+      db.executeSql(sql, data).then((data : any) => {
+        if(data.rows.length > 0){
+          let regras = new Array<Regra>();
+          for (var i = 0; i < data.rows.length; i++){
+            let tmp = data.rows.item(i);
+            var regra = new Regra(tmp.idRegra, tmp.idDiretriz, tmp.descricaoRegra, tmp.regra_if);
+            regras.push(regra);
+          }
+          return regras;
+        } else{
+          return new Array<Regra>();
+        }
+      }).catch( e => {
+        this.errorDisplay.presentAlertError(e);
+        return null;
+      });
+    }).catch( e => {
+      this.errorDisplay.presentAlertError(e);
+      return null;
+    });
     return null;
   }
 
