@@ -29,6 +29,7 @@ import { DiretrizDeficienciaDaoProvider } from '../providers/dao/diretriz-defici
 import { HTTP } from '@ionic-native/http';
 import { RegraAtributoDaoProvider } from '../providers/dao/regra-atributo-dao';
 import { SeProvider } from '../providers/se/se';
+import { GeneralDaoProvider } from '../providers/general-dao/general-dao';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { SeProvider } from '../providers/se/se';
     HTTP,
     RegraAtributoDaoProvider,
     SeProvider,
-    SeProvider
+    SeProvider,
+    GeneralDaoProvider
   ]
 })
 export class AppModule {}

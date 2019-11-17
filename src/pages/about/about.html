@@ -14,21 +14,33 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <p class="font-title-h3 p-16">Grupos de Pesquisa envolvidos neste projeto:</p>
+  <ion-card class="border-radius">
     <ion-card-header>
-      <ion-card-title>
-        <p>Grupos de Pesquisa envolvidos neste projeto:</p>
+      <div class="flex justify-center  b-dotted">
+        <img src="assets/imgs/brasao-ufsm.png" class="img-45 mb-5"/>
+      </div>
+      <ion-card-title class="line-break-down  b-dotted">
+        <p class="font-title-h4">UFSM - Universidade Federal de Santa Maria</p>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-    1) UFSM - Universidade Federal de Santa Maria
-
-    Desenvolvimento e Inovação em Reabilitação e Tecnologia Assistiva
-    IATE - Inteligência Artificial e Tecnologia Educacional
-
-    2) UFSC - Universidade Federal de Santa Catarina
-
-    Núcleo de Acessibilidade Digital e Tecnologias Assistivas
+    <p>Desenvolvimento e Inovação em Reabilitação e Tecnologia Assistiva IATE - Inteligência Artificial e Tecnologia Educacional</p>
     </ion-card-content>
   </ion-card>
+  <ion-card class="border-radius">
+    <ion-card-header>
+      <div class="flex justify-center b-dotted">
+        <img src="assets/imgs/brasao_ufsc.png" class="img-45 mb-5"/>
+      </div>
+      <ion-card-title class="line-break-down b-dotted">
+        <p class="font-title-h4">UFSC - Universidade Federal de Santa Catarina</p>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Núcleo de Acessibilidade Digital e Tecnologias Assistivas</p>
+    </ion-card-content>
+  </ion-card>
+<!--  <p>Em caso de erro Restaure o Banco de Dados Através do Botão Restaurar e após feche e abra novamente o aplicativo. </p>-->
+<!--  <button ion-button (click)="deleteDB()" >Restaurar Banco de Dados</button>-->
 </ion-content>

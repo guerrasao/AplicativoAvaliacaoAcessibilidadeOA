@@ -43,30 +43,23 @@ export class DiretrizDeficienciaDaoProvider {
   // }
 
   public getAll() : Array<Diretriz_Deficiencia>{
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'select * from '+this.table;
-      let data : any[];
-      db.executeSql(sql, data).then((data : any) => {
-        if(data.rows.length > 0){
-          let diretrizDeficiencias = new Array<Diretriz_Deficiencia>();
-          for (var i = 0; i < data.rows.length; i++){
-            let tmp = data.rows.item(i);
-            var diretrizDeficiencia = new Diretriz_Deficiencia(tmp.idDiretriz, tmp.idDeficiencia);
-            diretrizDeficiencias.push(diretrizDeficiencia);
-          }
-          return diretrizDeficiencias;
-        } else{
-          return new Array<Diretriz_Deficiencia>();
+    let sql = 'select * from '+this.table;
+    let data : any[];
+    let diretrizDeficiencias = new Array<Diretriz_Deficiencia>();
+    this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {
+      if(data.rows.length > 0){
+        for (var i = 0; i < data.rows.length; i++){
+          let tmp = data.rows.item(i);
+          var diretrizDeficiencia = new Diretriz_Deficiencia(tmp.idDiretriz, tmp.idDeficiencia);
+          diretrizDeficiencias.push(diretrizDeficiencia);
         }
-      }).catch( e => {
-        this.errorDisplay.presentAlertError(e);
-        return null;
-      });
+        return diretrizDeficiencias;
+      }
     }).catch( e => {
       this.errorDisplay.presentAlertError(e);
       return null;
     });
-    return null;
+    return diretrizDeficiencias;
   }
 
   public getAllWhere(where : String) : Array<Diretriz_Deficiencia> {

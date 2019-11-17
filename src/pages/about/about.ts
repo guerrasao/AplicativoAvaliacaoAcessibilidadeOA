@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {DbProvider} from "../../providers/db/db";
 
 /**
  * Generated class for the AboutPage page.
@@ -14,11 +15,16 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dbprovider : DbProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AboutPage');
+  }
+
+  public deleteDB(){
+    this.dbprovider.dbConection.close();
+    this.dbprovider.deleteDB();
   }
 
 }

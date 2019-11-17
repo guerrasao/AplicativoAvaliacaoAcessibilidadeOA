@@ -18,88 +18,74 @@ export class DiretrizDaoProvider {
 
   }
 
-  public insert(diretriz : Diretriz) : void{
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'insert into '+this.table+'(idDiretriz, idMidia, descricaoDiretriz, recomendacao) values (?, ?, ?, ?)';
-      let data = [diretriz.getIdDiretriz(), diretriz.getIdMidia(), diretriz.getDescricaoDiretriz(), diretriz.getRecomendacao()];
-      db.executeSql(sql, data).then(() => {
-        this.errorDisplay.presentAlertWarning(this.table+" inserido(a)");
-      }).catch( e => this.errorDisplay.presentAlertError(e));
-    }).catch( e => this.errorDisplay.presentAlertError(e));
-  }
-
-  public remove(idDiretriz : number) : void{
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'delete from '+this.table+' where idDiretriz = ?';
-      let data = [idDiretriz];
-      db.executeSql(sql, data).then(() => {
-        this.errorDisplay.presentAlertWarning(this.table+" removido(a)");
-      }).catch( e => this.errorDisplay.presentAlertError(e));
-    }).catch( e => this.errorDisplay.presentAlertError(e));
-  }
-
-  public update(diretriz : Diretriz) : void{
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'update '+this.table+' set idDiretriz = ?, idMidia = ?, descricaoDiretriz = ?, recomendacao = ?  where idDiretriz = ?';
-      let data = [diretriz.getIdDiretriz(), diretriz.getIdMidia(), diretriz.getDescricaoDiretriz(), diretriz.getRecomendacao(), diretriz.getIdDiretriz()];
-      db.executeSql(sql, data).then(() => {
-        this.errorDisplay.presentAlertWarning(this.table+" atualizado(a)");
-      }).catch( e => this.errorDisplay.presentAlertError(e));
-    }).catch( e => this.errorDisplay.presentAlertError(e));
-  }
+  // public insert(diretriz : Diretriz) : void{
+  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
+  //     let sql = 'insert into '+this.table+'(idDiretriz, idMidia, descricaoDiretriz, recomendacao) values (?, ?, ?, ?)';
+  //     let data = [diretriz.getIdDiretriz(), diretriz.getIdMidia(), diretriz.getDescricaoDiretriz(), diretriz.getRecomendacao()];
+  //     db.executeSql(sql, data).then(() => {
+  //       this.errorDisplay.presentAlertWarning(this.table+" inserido(a)");
+  //     }).catch( e => this.errorDisplay.presentAlertError(e));
+  //   }).catch( e => this.errorDisplay.presentAlertError(e));
+  // }
+  //
+  // public remove(idDiretriz : number) : void{
+  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
+  //     let sql = 'delete from '+this.table+' where idDiretriz = ?';
+  //     let data = [idDiretriz];
+  //     db.executeSql(sql, data).then(() => {
+  //       this.errorDisplay.presentAlertWarning(this.table+" removido(a)");
+  //     }).catch( e => this.errorDisplay.presentAlertError(e));
+  //   }).catch( e => this.errorDisplay.presentAlertError(e));
+  // }
+  //
+  // public update(diretriz : Diretriz) : void{
+  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
+  //     let sql = 'update '+this.table+' set idDiretriz = ?, idMidia = ?, descricaoDiretriz = ?, recomendacao = ?  where idDiretriz = ?';
+  //     let data = [diretriz.getIdDiretriz(), diretriz.getIdMidia(), diretriz.getDescricaoDiretriz(), diretriz.getRecomendacao(), diretriz.getIdDiretriz()];
+  //     db.executeSql(sql, data).then(() => {
+  //       this.errorDisplay.presentAlertWarning(this.table+" atualizado(a)");
+  //     }).catch( e => this.errorDisplay.presentAlertError(e));
+  //   }).catch( e => this.errorDisplay.presentAlertError(e));
+  // }
 
   public getAll() : Array<Diretriz>{
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'select * from '+this.table;
-      let data : any[];
-      db.executeSql(sql, data).then((data : any) => {
-        if(data.rows.length > 0){
-          let diretrizes = new Array<Diretriz>();
-          for (var i = 0; i < data.rows.length; i++){
-            let tmp = data.rows.item(i);
-            var diretriz = new Diretriz(tmp.idMidia, tmp.tipoMidia);
-            diretrizes.push(diretriz);
-          }
-          return diretrizes;
-        } else{
-          return new Array<Diretriz>();
+    let sql = 'select * from '+this.table;
+    let data : any[];
+    let diretrizes = new Array<Diretriz>();
+    this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {
+      if(data.rows.length > 0){
+        for (var i = 0; i < data.rows.length; i++){
+          let tmp = data.rows.item(i);
+          var diretriz = new Diretriz(tmp.idDiretriz, tmp.idMidia, tmp.descricaoDiretriz, tmp.recomendacao);
+          diretrizes.push(diretriz);
         }
-      }).catch( e => {
-        this.errorDisplay.presentAlertError(e);
-        return null;
-      });
+        return diretrizes;
+      }
     }).catch( e => {
       this.errorDisplay.presentAlertError(e);
       return null;
     });
-    return null;
+    return diretrizes;
   }
 
-  public getAllWhere(where : String) : Array<Diretriz> {
-    this.dbProvider.getDB().then((db : SQLiteObject) =>{
-      let sql = 'select * from ' + this.table +' where '+ where;
-      let data : any[];
-      db.executeSql(sql, data).then((data : any) => {
-        if(data.rows.length > 0){
-          let diretrizes = new Array<Diretriz>();
-          for (var i = 0; i < data.rows.length; i++){
-            let tmp = data.rows.item(i);
-            var diretriz = new Diretriz(tmp.idMidia, tmp.tipoMidia);
-            diretrizes.push(diretriz);
-          }
-          return diretrizes;
-        } else{
-          return new Array<Diretriz>();
+  public getAllWhere(where : string) : Array<Diretriz>{
+    let sql = 'select * from ' + this.table +' where '+ where;
+    let data : any[];
+    let diretrizes = new Array<Diretriz>();
+    this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {
+      if(data.rows.length > 0){
+        for (var i = 0; i < data.rows.length; i++){
+          let tmp = data.rows.item(i);
+          var diretriz = new Diretriz(tmp.idDiretriz, tmp.idMidia, tmp.descricaoDiretriz, tmp.recomendacao);
+          diretrizes.push(diretriz);
         }
-      }).catch( e => {
-        this.errorDisplay.presentAlertError(e);
-        return null;
-      });
+        return diretrizes;
+      }
     }).catch( e => {
       this.errorDisplay.presentAlertError(e);
       return null;
     });
-    return null;
+    return diretrizes;
   }
 
 }

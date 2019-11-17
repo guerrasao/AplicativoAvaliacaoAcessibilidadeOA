@@ -11,6 +11,7 @@ import {Db_seed} from "./db_seed";
 */
 @Injectable()
 export class DbProvider {
+  public dbConection : SQLiteObject;
   private dbSeedClass : Db_seed;
   constructor(private sqlite : SQLite, private errorDisplay : ErrorDisplayProvider) {
 
@@ -35,6 +36,7 @@ export class DbProvider {
       .then((db : SQLiteObject) =>{
         this.createTables(db);
         this.dbSeed(db, this.errorDisplay, false);
+        this.dbConection = db;
       })
       .catch(e => this.errorDisplay.presentAlertError(e));
   }
@@ -51,7 +53,7 @@ export class DbProvider {
       'CREATE TABLE IF NOT EXISTS Regra (idRegra INT NOT NULL, idDiretriz INT NOT NULL, descricaoRegra VARCHAR(300) NULL, regraIf VARCHAR(300) NULL, PRIMARY KEY (idRegra), FOREIGN KEY (idDiretriz) REFERENCES Diretriz (idDiretriz) ON DELETE NO ACTION ON UPDATE NO ACTION);',
       'CREATE TABLE IF NOT EXISTS Regra_Atributo (idAtributo INT NOT NULL, idRegra INT NOT NULL, PRIMARY KEY (idAtributo, idRegra), FOREIGN KEY (idAtributo) REFERENCES Atributo (idAtributo) ON DELETE NO ACTION ON UPDATE NO ACTION, FOREIGN KEY (idRegra) REFERENCES Regra (idRegra) ON DELETE NO ACTION ON UPDATE NO ACTION);'
   ]).then(() => {
-      //this.errorDisplay.presentAlertWarning('Tabelas criadas com sucesso');
+      console.log('Tabelas criadas com sucesso');
     }).catch(e => this.errorDisplay.presentAlertError(e));
   }
 
