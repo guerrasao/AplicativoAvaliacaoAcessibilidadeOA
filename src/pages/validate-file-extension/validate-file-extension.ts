@@ -6,15 +6,16 @@ import {NavigationProvider} from "../../providers/navigation/navigation";
 import {SeProvider} from "../../providers/se/se";
 import {DbProvider} from "../../providers/db/db";
 import {GeneralDaoProvider} from "../../providers/general-dao/general-dao";
-import {OaDaoProvider} from "../../providers/dao/oa-dao";
-import {RegraAtributoDaoProvider} from "../../providers/dao/regra-atributo-dao";
-import {AtributoDaoProvider} from "../../providers/dao/atributo-dao";
-import {MidiaDaoProvider} from "../../providers/dao/midia-dao";
-import {MidiaOaDaoProvider} from "../../providers/dao/midia-oa-dao";
-import {DiretrizDaoProvider} from "../../providers/dao/diretriz-dao";
-import {DiretrizDeficienciaDaoProvider} from "../../providers/dao/diretriz-deficiencia-dao";
-import {DeficienciaDaoProvider} from "../../providers/dao/deficiencia-dao";
-import {APIServer} from "../../providers/se/APIServer";
+// import {OaDaoProvider} from "../../providers/dao/oa-dao";
+// import {RegraAtributoDaoProvider} from "../../providers/dao/regra-atributo-dao";
+// import {AtributoDaoProvider} from "../../providers/dao/atributo-dao";
+// import {MidiaDaoProvider} from "../../providers/dao/midia-dao";
+// import {MidiaOaDaoProvider} from "../../providers/dao/midia-oa-dao";
+// import {DiretrizDaoProvider} from "../../providers/dao/diretriz-dao";
+// import {DiretrizDeficienciaDaoProvider} from "../../providers/dao/diretriz-deficiencia-dao";
+// import {DeficienciaDaoProvider} from "../../providers/dao/deficiencia-dao";
+import {ResponseRuleModel} from "../../providers/se/ResponseRuleModel";
+import {ApiServerProvider} from "../../providers/api-server/api-server";
 
 /**
  * Generated class for the ValidateFileExtensionPage page.
@@ -32,6 +33,13 @@ export class ValidateFileExtensionPage {
   public tmpFile : any;
   public hasErro : any;
   public hasFile : any;
+  public responseEvaluation : Array<ResponseRuleModel> = null;
+  public regrasAvaliadas : Array<number> = new Array<number>();
+  public cRegrasAvaliadas : number = 0;
+  public cRegrasComErro : number = 0;
+  public cRegrasSemErro : number = 0;
+  public cRegrasNaoAvaliadas : number = 0;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,15 +49,15 @@ export class ValidateFileExtensionPage {
     private errorDisplay : ErrorDisplayProvider,
     private seProvider : SeProvider,
     public generalDAO : GeneralDaoProvider,
-    public apiServer : APIServer,
-    public oaDAO : OaDaoProvider,
-    public regraAtributoDAO : RegraAtributoDaoProvider,
-    public atributoDAO : AtributoDaoProvider,
-    public midiaDAO : MidiaDaoProvider,
-    public midiaOADAO : MidiaOaDaoProvider,
-    public diretrizDAO : DiretrizDaoProvider,
-    public diretrizDeficienciaDAO : DiretrizDeficienciaDaoProvider,
-    public deficienciaDAO : DeficienciaDaoProvider
+    public apiServerProvider : ApiServerProvider,
+    // public oaDAO : OaDaoProvider,
+    // public regraAtributoDAO : RegraAtributoDaoProvider,
+    // public atributoDAO : AtributoDaoProvider,
+    // public midiaDAO : MidiaDaoProvider,
+    // public midiaOADAO : MidiaOaDaoProvider,
+    // public diretrizDAO : DiretrizDaoProvider,
+    // public diretrizDeficienciaDAO : DiretrizDeficienciaDaoProvider,
+    // public deficienciaDAO : DeficienciaDaoProvider
   ) {
     //console.log('ionViewDidLoad ValidateFileExtensionPage');
 
@@ -79,7 +87,7 @@ export class ValidateFileExtensionPage {
 
     let nav : NavigationProvider = new NavigationProvider();
 
-    this.http.uploadFile(this.apiServer.url, {}, {}, this.hasFile.uri, 'file' ).then( resp => {
+    this.http.uploadFile(this.apiServerProvider.url, {}, {}, this.hasFile.uri, 'file' ).then( resp => {
       //console.log(resp);
       loadingEnv.dismiss();
       if(resp.status == 200){
@@ -97,7 +105,26 @@ export class ValidateFileExtensionPage {
           // this.diretrizDeficienciaDAO,
           // this.deficienciaDAO
         );
-        se.avaliaJSON(resp.data);
+        this.responseEvaluation = se.avaliaJSON(resp.data, this.regrasAvaliadas);
+        // informacoes do resumo
+        for (let i = 0; i < this.regrasAvaliadas.length; i++){
+          if(this.regrasAvaliadas[i] == 1){
+            this.cRegrasComErro++;
+            this.cRegrasAvaliadas++;
+          }else{
+            if(this.regrasAvaliadas[i] == 0){
+              this.cRegrasSemErro++;
+              this.cRegrasAvaliadas++;
+            }else{
+              if (this.regrasAvaliadas[i] == -1) {
+                this.cRegrasNaoAvaliadas++;
+              }
+            }
+          }
+        }
+
+
+
       }
     }).catch(error => {
       loadingEnv.dismiss();

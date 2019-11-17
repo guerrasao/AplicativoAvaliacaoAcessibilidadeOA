@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Avaliação OA</ion-title>
+    <ion-title>Resultado Avaliação OA</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,4 +19,33 @@
 <!--  <p *ngIf="hasFile">URI: {{hasFile.uri}}</p>-->
 <!--  <p *ngIf="hasFile">DataURI: {{hasFile.dataURI}}</p>-->
 <!--  <p *ngIf="hasFile">MediaType: {{hasFile.mediaType}}</p>-->
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        Resumo da Avaliação
+      </ion-list-header>
+      <ion-item>
+        Foram avaliadas {{cRegrasAvaliadas}} regras de um total de {{(cRegrasNaoAvaliadas+cRegrasAvaliadas)}} regras.
+      </ion-item>
+      <ion-item>
+        O OA passou em {{cRegrasSemErro}} regras.
+      </ion-item>
+      <ion-item>
+        O OA não passou em {{cRegrasComErro}} regras.
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        List Header
+      </ion-list-header>
+      <ion-item>
+        Regra 1
+      </ion-item>
+      <ion-item>
+        regra 2
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

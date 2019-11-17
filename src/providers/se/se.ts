@@ -31,6 +31,7 @@ import * as getContrast from "get-contrast/index.js"
 export class SeProvider {
   private data : Data = new Data();
   public response : Array<ResponseRuleModel> = new Array<ResponseRuleModel>();
+  public regrasAvaliadas : Array<number> = null;
   constructor(
     private errorDisplay : ErrorDisplayProvider,
     private generalDAO : GeneralDaoProvider,
@@ -48,9 +49,11 @@ export class SeProvider {
     console.log('Hello SeProvider Provider');
   }
 
-  private rule0(idRegra : number): boolean{
+  private rule0(idRegra : number): number{
     //[0, 12, 'Verificar contraste entre o texto e a cor de fundo', ''],
     //verificando apenas em docx devido ao epub possuir campos em branco em relação as cores
+    // res pode receber: -1 = nao avaliado, 0 nao foram encontrados erros, e 1 foram encontrados
+    let res = -1;
     if(this.data.tipo != "epub") {
       let conteudoComErro: Array<string> = new Array<string>();
       for (let i = 0; i < this.data.textos.length; i++) {
@@ -60,10 +63,14 @@ export class SeProvider {
         if (corFundoTexto == "transparent") {
           corFundoTexto = corFundoOA;
         }
-        var contrast = getContrast.isAccessible('#'.concat(corTexto), '#'.concat(corFundoTexto));
-        if (contrast == false) {
-          conteudoComErro.push(this.data.textos[i].textoLinha);
+        // verificando se nao estao faltando os campos
+        if(corTexto != "" && corFundoTexto != "") {
+          var contrast = getContrast.isAccessible('#'.concat(corTexto), '#'.concat(corFundoTexto));
+          if (contrast == false) {
+            conteudoComErro.push(this.data.textos[i].textoLinha);
+          }
         }
+        res = 0;
       }
       if (conteudoComErro.length > 0) {
         this.response.push(
@@ -72,14 +79,15 @@ export class SeProvider {
             conteudoComErro
           )
         );
-        return true;
+        res = 1;
       }
     }
-    return false;
+    return res;
   }
 
-  private rule1(idRegra : number): boolean{
+  private rule1(idRegra : number): number{
     //[1, 21, 'Verificar se existem cabeçalhos identificados como títulos, verificação da existência de ao menos uma vez palavra título ou title no atributo titulo dos textos', ''],
+    let res = -1;
     let conteudoComErro: Array<string> = new Array<string>();
     let titles: number = 0;
     if(this.data.tipo == "docx") {
@@ -92,6 +100,7 @@ export class SeProvider {
         ) {
           titles++;
         }
+        res = 0;
       }
     }else {
       if (this.data.tipo == "epub") {
@@ -99,6 +108,7 @@ export class SeProvider {
           if (this.data.textos[i].tagEpub.indexOf("h") >= 0) {
             titles++;
           }
+          res = 0;
         }
       }
     }
@@ -112,18 +122,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule2(idRegra : number): boolean{
+  private rule2(idRegra : number): number{
     //[2, 29, 'Verificar se o texto não está com alinhamento justificado ou centralizado', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.textos.length; i++){
       if(this.data.textos[i].alinhamentoTexto == "justify" ||  this.data.textos[i].alinhamentoTexto == "center"){
         conteudoComErro.push(this.data.textos[i].textoLinha);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -132,18 +144,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule3(idRegra : number): boolean{
+  private rule3(idRegra : number): number{
     // [3, 33, 'Verificar se imagens possuem titulo e/ou descrição alternativa', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.imagens.length; i++){
       if(this.data.imagens[i].tituloAlt == "" ||  this.data.imagens[i].descricaoAlt == ""){
         conteudoComErro.push("imagem "+this.data.imagens[i].idImagem);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -152,18 +166,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule4(idRegra : number): boolean{
+  private rule4(idRegra : number): number{
     // [4, 34, 'Verificar se a tabela possui título', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.tabelas.length; i++){
       if(this.data.tabelas[i].tituloAlt == ""){
         conteudoComErro.push("tabela "+this.data.tabelas[i].idTabela);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -172,18 +188,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule5(idRegra : number): boolean{
+  private rule5(idRegra : number): number{
     //[5, 36, 'Verificar se a tabela possui descrição alternativa', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.tabelas.length; i++){
       if(this.data.tabelas[i].descricaoAlt == ""){
         conteudoComErro.push("tabela "+this.data.tabelas[i].idTabela);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -192,18 +210,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule6(idRegra : number): boolean{
+  private rule6(idRegra : number): number{
     //[6, 41, 'Verificar se o vídeo possui título', ''],
     let conteudoComErro : Array<string> = new Array<string>();
+    let res = -1;
     for (let i = 0; i < this.data.videos.length; i++){
       if(this.data.videos[i].tituloAlt == ""){
         conteudoComErro.push("video "+this.data.videos[i].idVideo);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -212,18 +232,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1;
     }
-    return false;
+    return res;
   }
 
-  private rule7(idRegra : number): boolean{
+  private rule7(idRegra : number): number{
     //[7, 43, 'Verificar se o vídeo possui descrição alternativa', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.videos.length; i++){
       if(this.data.videos[i].descricaoAlt == ""){
         conteudoComErro.push("video "+this.data.videos[i].idVideo);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -232,18 +254,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1
     }
-    return false;
+    return res;
   }
 
-  private rule8(idRegra : number): boolean{
+  private rule8(idRegra : number): number{
     //[8, 46, 'Verificar se o gráfico possui descrição alternativa', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.graficos.length; i++){
       if(this.data.graficos[i].descricaoAlt == ""){
         conteudoComErro.push("grafico "+this.data.graficos[i].idGrafico);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -252,13 +276,14 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1
     }
-    return false;
+    return res;
   }
 
-  private rule9(idRegra : number): boolean{
+  private rule9(idRegra : number): number{
     //[9, 47, 'Verificar se o gráfico possui um sumário no título, verificação da existência da palavra sumário', ''],
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.graficos.length; i++){
       if(this.data.graficos[i].tituloAlt.indexOf("sumário") < 0 &&
@@ -267,6 +292,7 @@ export class SeProvider {
       ){
         conteudoComErro.push("grafico "+this.data.graficos[i].idGrafico);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -275,18 +301,20 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1
     }
-    return false;
+    return res;
   }
 
-  private rule10(idRegra : number): boolean{
+  private rule10(idRegra : number): number{
     //[10, 49, 'Verificar se o áudio possui uma legenda', '']
+    let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.audios.length; i++){
       if(this.data.audios[i].legenda == ""){
         conteudoComErro.push("audio "+this.data.audios[i].idAudio);
       }
+      res = 0;
     }
     if(conteudoComErro.length > 0){
       this.response.push(
@@ -295,14 +323,15 @@ export class SeProvider {
           conteudoComErro
         )
       );
-      return true;
+      res = 1
     }
-    return false;
+    return res;
   }
 
-  public avaliaJSON(data : any){
+  public avaliaJSON(data : any, regrasAvaliadas : Array<number>){
     // API JSON response to temporary structure
     let dataTemp = JSON.parse(data);
+    this.regrasAvaliadas = regrasAvaliadas;
     // temporary structure to Array type of Data
     this.data.inserirDadosDocumento(dataTemp.caminho, dataTemp.tipo, dataTemp.corDeFundo, dataTemp.themeColor, dataTemp.themeShade);
     for (let i = 0; i < dataTemp.textos.length; i++){
@@ -401,19 +430,21 @@ export class SeProvider {
     // console.log(resultDiretrizDeficiencia);
     // let resultDeficiencia : Array<Deficiencia> = this.deficienciaDAO.getAll();
     // console.log(resultDeficiencia);
-    this.rule0(0);
-    this.rule1(1);
-    this.rule2(2);
-    this.rule3(3);
-    this.rule4(4);
-    this.rule5(5);
-    this.rule6(6);
-    this.rule7(7);
-    this.rule8(8);
-    this.rule9(9);
-    this.rule10(10);
 
-    console.log(this.response);
+    this.regrasAvaliadas.push(this.rule0(0));
+    this.regrasAvaliadas.push(this.rule1(1));
+    this.regrasAvaliadas.push(this.rule2(2));
+    this.regrasAvaliadas.push(this.rule3(3));
+    this.regrasAvaliadas.push(this.rule4(4));
+    this.regrasAvaliadas.push(this.rule5(5));
+    this.regrasAvaliadas.push(this.rule6(6));
+    this.regrasAvaliadas.push(this.rule7(7));
+    this.regrasAvaliadas.push(this.rule8(8));
+    this.regrasAvaliadas.push(this.rule9(9));
+    this.regrasAvaliadas.push(this.rule10(10));
+
+    //console.log(this.response);
+    return this.response;
   }
 
 

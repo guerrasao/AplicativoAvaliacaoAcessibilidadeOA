@@ -30,6 +30,7 @@ import { HTTP } from '@ionic-native/http';
 import { RegraAtributoDaoProvider } from '../providers/dao/regra-atributo-dao';
 import { SeProvider } from '../providers/se/se';
 import { GeneralDaoProvider } from '../providers/general-dao/general-dao';
+import { ApiServerProvider } from '../providers/api-server/api-server';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { GeneralDaoProvider } from '../providers/general-dao/general-dao';
     RegraAtributoDaoProvider,
     SeProvider,
     SeProvider,
-    GeneralDaoProvider
+    GeneralDaoProvider,
+    ApiServerProvider
   ]
 })
 export class AppModule {}
