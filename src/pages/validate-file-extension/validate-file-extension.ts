@@ -14,6 +14,7 @@ import {MidiaOaDaoProvider} from "../../providers/dao/midia-oa-dao";
 import {DiretrizDaoProvider} from "../../providers/dao/diretriz-dao";
 import {DiretrizDeficienciaDaoProvider} from "../../providers/dao/diretriz-deficiencia-dao";
 import {DeficienciaDaoProvider} from "../../providers/dao/deficiencia-dao";
+import {APIServer} from "../../providers/se/APIServer";
 
 /**
  * Generated class for the ValidateFileExtensionPage page.
@@ -40,6 +41,7 @@ export class ValidateFileExtensionPage {
     private errorDisplay : ErrorDisplayProvider,
     private seProvider : SeProvider,
     public generalDAO : GeneralDaoProvider,
+    public apiServer : APIServer,
     public oaDAO : OaDaoProvider,
     public regraAtributoDAO : RegraAtributoDaoProvider,
     public atributoDAO : AtributoDaoProvider,
@@ -77,7 +79,7 @@ export class ValidateFileExtensionPage {
 
     let nav : NavigationProvider = new NavigationProvider();
 
-    this.http.uploadFile('http://192.168.0.111:3001/file/upload', {}, {}, this.hasFile.uri, 'file' ).then( resp => {
+    this.http.uploadFile(this.apiServer.url, {}, {}, this.hasFile.uri, 'file' ).then( resp => {
       //console.log(resp);
       loadingEnv.dismiss();
       if(resp.status == 200){
