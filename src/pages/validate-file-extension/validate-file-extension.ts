@@ -86,14 +86,14 @@ export class ValidateFileExtensionPage {
         let se = this.seProvider = new SeProvider(
           this.errorDisplay,
           this.generalDAO,
-          this.oaDAO,
-          this.regraAtributoDAO,
-          this.atributoDAO,
-          this.midiaDAO,
-          this.midiaOADAO,
-          this.diretrizDAO,
-          this.diretrizDeficienciaDAO,
-          this.deficienciaDAO
+          // this.oaDAO,
+          // this.regraAtributoDAO,
+          // this.atributoDAO,
+          // this.midiaDAO,
+          // this.midiaOADAO,
+          // this.diretrizDAO,
+          // this.diretrizDeficienciaDAO,
+          // this.deficienciaDAO
         );
         se.avaliaJSON(resp.data);
       }

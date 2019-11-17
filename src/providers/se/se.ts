@@ -3,6 +3,7 @@ import { Data } from "./Data";
 import {ErrorDisplayProvider} from "../error-display/error-display";
 import {GeneralDaoProvider} from "../general-dao/general-dao";
 import {ResponseRuleModel} from "./ResponseRuleModel";
+import * as getContrast from "get-contrast/index.js"
 // import {OaDaoProvider} from "../dao/oa-dao";
 // import {OA} from "../../models/OA";
 // import {Regra_Atributo} from "../../models/Regra_Atributo";
@@ -49,22 +50,62 @@ export class SeProvider {
 
   private rule0(idRegra : number): boolean{
     //[0, 12, 'Verificar contraste entre o texto e a cor de fundo', ''],
-
+    //verificando apenas em docx devido ao epub possuir campos em branco em relação as cores
+    if(this.data.tipo != "epub") {
+      let conteudoComErro: Array<string> = new Array<string>();
+      for (let i = 0; i < this.data.textos.length; i++) {
+        var corTexto = this.data.textos[i].corDaFonte;
+        var corFundoTexto = this.data.textos[i].corDeFundo;
+        var corFundoOA = this.data.corDeFundo;
+        if (corFundoTexto == "transparent") {
+          corFundoTexto = corFundoOA;
+        }
+        var contrast = getContrast.isAccessible('#'.concat(corTexto), '#'.concat(corFundoTexto));
+        if (contrast == false) {
+          conteudoComErro.push(this.data.textos[i].textoLinha);
+        }
+      }
+      if (conteudoComErro.length > 0) {
+        this.response.push(
+          new ResponseRuleModel(
+            idRegra,
+            conteudoComErro
+          )
+        );
+        return true;
+      }
+    }
     return false;
   }
 
   private rule1(idRegra : number): boolean{
     //[1, 21, 'Verificar se existem cabeçalhos identificados como títulos, verificação da existência de ao menos uma vez palavra título ou title no atributo titulo dos textos', ''],
-    let conteudoComErro : Array<string> = new Array<string>();
-    for (let i = 0; i < this.data.textos.length; i++){
-      if(this.data.textos[i].titulo.indexOf("título") < 0 &&
-        this.data.textos[i].titulo.indexOf("titulo") < 0 &&
-        this.data.textos[i].titulo.indexOf("title") < 0
-      ){
-        conteudoComErro.push(this.data.textos[i].textoLinha);
+    let conteudoComErro: Array<string> = new Array<string>();
+    let titles: number = 0;
+    if(this.data.tipo == "docx") {
+      for (let i = 0; i < this.data.textos.length; i++) {
+        if (this.data.textos[i].titulo.indexOf("título") >= 0 ||
+          this.data.textos[i].titulo.indexOf("titulo") >= 0 ||
+          this.data.textos[i].titulo.indexOf("title") >= 0 ||
+          this.data.textos[i].titulo.indexOf("Ttulo") >= 0 ||
+          this.data.textos[i].titulo.indexOf("ttulo") >= 0
+        ) {
+          titles++;
+        }
+      }
+    }else {
+      if (this.data.tipo == "epub") {
+        for (let i = 0; i < this.data.textos.length; i++) {
+          if (this.data.textos[i].tagEpub.indexOf("h") >= 0) {
+            titles++;
+          }
+        }
       }
     }
-    if(conteudoComErro.length > 0){
+    if (titles == 0) {
+      conteudoComErro.push("Não foi encontrado nenhum título no OA.");
+    }
+    if (conteudoComErro.length > 0) {
       this.response.push(
         new ResponseRuleModel(
           idRegra,
@@ -97,7 +138,7 @@ export class SeProvider {
   }
 
   private rule3(idRegra : number): boolean{
-    // [3, 33, 'Verificar se imagens possuem titulo e descrição alternativa', ''],
+    // [3, 33, 'Verificar se imagens possuem titulo e/ou descrição alternativa', ''],
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.imagens.length; i++){
       if(this.data.imagens[i].tituloAlt == "" ||  this.data.imagens[i].descricaoAlt == ""){
@@ -333,15 +374,15 @@ export class SeProvider {
     }
 
     console.log(this.data);
-    let sql = 'select * from Regra ' +
-      'inner join Regra_Atributo on Regra.idRegra = Regra_Atributo.idRegra ' +
-      'inner join Atributo on Atributo.idAtributo = Regra_atributo.idAtributo ' +
-      'where idMidia in ' +
-      '(select Midia.idMidia from Midia,Midia_OA where Midia.idMidia = Midia_OA.idMidia and Midia_OA.idOA in ' +
-      '     (select idOA from OA where formatoOA = "'+this.data.tipo+'"));';
-
-    let respos : Array<any> = this.generalDAO.getAll(sql);
-    console.log(respos);
+    // let sql = 'select * from Regra ' +
+    //   'inner join Regra_Atributo on Regra.idRegra = Regra_Atributo.idRegra ' +
+    //   'inner join Atributo on Atributo.idAtributo = Regra_atributo.idAtributo ' +
+    //   'where idMidia in ' +
+    //   '(select Midia.idMidia from Midia,Midia_OA where Midia.idMidia = Midia_OA.idMidia and Midia_OA.idOA in ' +
+    //   '     (select idOA from OA where formatoOA = "'+this.data.tipo+'"));';
+    //
+    // let respos : Array<any> = this.generalDAO.getAll(sql);
+    // console.log(respos);
 
     // db validate:
     // let resultOA : Array<OA> = this.oaDAO.getAll();
@@ -360,7 +401,19 @@ export class SeProvider {
     // console.log(resultDiretrizDeficiencia);
     // let resultDeficiencia : Array<Deficiencia> = this.deficienciaDAO.getAll();
     // console.log(resultDeficiencia);
+    this.rule0(0);
+    this.rule1(1);
+    this.rule2(2);
+    this.rule3(3);
+    this.rule4(4);
+    this.rule5(5);
+    this.rule6(6);
+    this.rule7(7);
+    this.rule8(8);
+    this.rule9(9);
+    this.rule10(10);
 
+    console.log(this.response);
   }
 
 

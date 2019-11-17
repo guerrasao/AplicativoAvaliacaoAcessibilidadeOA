@@ -22,9 +22,7 @@ export class GeneralDaoProvider {
     // });
     let resultado = new Array<any>();
       let data : any[];
-      console.log(this.dbProvider.dbConection);
       this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {
-        console.log(data);
         if(data.rows.length > 0){
           let resultado = new Array<any>();
           for (var i = 0; i < data.rows.length; i++){
