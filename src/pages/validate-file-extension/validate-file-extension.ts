@@ -6,16 +6,23 @@ import {NavigationProvider} from "../../providers/navigation/navigation";
 import {SeProvider} from "../../providers/se/se";
 import {DbProvider} from "../../providers/db/db";
 import {GeneralDaoProvider} from "../../providers/general-dao/general-dao";
-// import {OaDaoProvider} from "../../providers/dao/oa-dao";
-// import {RegraAtributoDaoProvider} from "../../providers/dao/regra-atributo-dao";
-// import {AtributoDaoProvider} from "../../providers/dao/atributo-dao";
-// import {MidiaDaoProvider} from "../../providers/dao/midia-dao";
-// import {MidiaOaDaoProvider} from "../../providers/dao/midia-oa-dao";
-// import {DiretrizDaoProvider} from "../../providers/dao/diretriz-dao";
-// import {DiretrizDeficienciaDaoProvider} from "../../providers/dao/diretriz-deficiencia-dao";
-// import {DeficienciaDaoProvider} from "../../providers/dao/deficiencia-dao";
+import {OaDaoProvider} from "../../providers/dao/oa-dao";
+import {RegraAtributoDaoProvider} from "../../providers/dao/regra-atributo-dao";
+import {AtributoDaoProvider} from "../../providers/dao/atributo-dao";
+import {MidiaDaoProvider} from "../../providers/dao/midia-dao";
+import {MidiaOaDaoProvider} from "../../providers/dao/midia-oa-dao";
+import {DiretrizDaoProvider} from "../../providers/dao/diretriz-dao";
+import {DiretrizDeficienciaDaoProvider} from "../../providers/dao/diretriz-deficiencia-dao";
+import {DeficienciaDaoProvider} from "../../providers/dao/deficiencia-dao";
 import {ResponseRuleModel} from "../../providers/se/ResponseRuleModel";
 import {ApiServerProvider} from "../../providers/api-server/api-server";
+import {Diretriz} from "../../models/Diretriz";
+import {Diretriz_Deficiencia} from "../../models/Diretriz_Deficiencia";
+import {Deficiencia} from "../../models/Deficiencia";
+import {Regra} from "../../models/Regra";
+import {RegraDaoProvider} from "../../providers/dao/regra-dao";
+import {DiretrizesPorDeficiencia} from "../../models/diretrizes-por-deficiencia";
+import {DiretrizesPorDeficienciaDaoProvider} from "../../providers/dao/diretrizes-por-deficiencia-dao";
 
 /**
  * Generated class for the ValidateFileExtensionPage page.
@@ -39,6 +46,14 @@ export class ValidateFileExtensionPage {
   public cRegrasComErro : number = 0;
   public cRegrasSemErro : number = 0;
   public cRegrasNaoAvaliadas : number = 0;
+  public regrasComErro : Array<number> = new Array<number>();
+  public regrasComErroString : string = "";
+  // public diretrizes : Array<Diretriz> = null;
+  // public diretrizesDeficiencia : Array<Diretriz_Deficiencia> = null;
+  public deficiencias : Array<Deficiencia> = null;
+  // public regras : Array<Regra> = null;
+  public diretrizesPorDeficienciaComErro : Array<DiretrizesPorDeficiencia> = null;
+  public diretrizesPorDeficienciaSemErro : Array<DiretrizesPorDeficiencia> = null;
 
   constructor(
     public navCtrl: NavController,
@@ -50,14 +65,17 @@ export class ValidateFileExtensionPage {
     private seProvider : SeProvider,
     public generalDAO : GeneralDaoProvider,
     public apiServerProvider : ApiServerProvider,
+    public diretrizPorDeficienciaDAO : DiretrizesPorDeficienciaDaoProvider,
+    public diretrizPorDeficienciaDAO2 : DiretrizesPorDeficienciaDaoProvider,
+    public regraDAO : RegraDaoProvider,
     // public oaDAO : OaDaoProvider,
     // public regraAtributoDAO : RegraAtributoDaoProvider,
     // public atributoDAO : AtributoDaoProvider,
     // public midiaDAO : MidiaDaoProvider,
     // public midiaOADAO : MidiaOaDaoProvider,
-    // public diretrizDAO : DiretrizDaoProvider,
-    // public diretrizDeficienciaDAO : DiretrizDeficienciaDaoProvider,
-    // public deficienciaDAO : DeficienciaDaoProvider
+    public diretrizDAO : DiretrizDaoProvider,
+    public diretrizDeficienciaDAO : DiretrizDeficienciaDaoProvider,
+    public deficienciaDAO : DeficienciaDaoProvider
   ) {
     //console.log('ionViewDidLoad ValidateFileExtensionPage');
 
@@ -91,6 +109,11 @@ export class ValidateFileExtensionPage {
       //console.log(resp);
       loadingEnv.dismiss();
       if(resp.status == 200){
+        // show loading
+        let loadingAnalise = this.loadingCtrl.create({
+          content: 'Resposta recebida, avaliando Objeto de Aprendizagem...'
+        });
+        loadingAnalise.present();
         // arquivo enviado e recebida a resposta do server
         //resp.data
         let se = this.seProvider = new SeProvider(
@@ -122,9 +145,15 @@ export class ValidateFileExtensionPage {
             }
           }
         }
-
-
-
+        let dpdDAOComErro = this.diretrizPorDeficienciaDAO = new DiretrizesPorDeficienciaDaoProvider(this.dbProvider, this.errorDisplay);
+        let dpdDAOSemErro = this.diretrizPorDeficienciaDAO2 = new DiretrizesPorDeficienciaDaoProvider(this.dbProvider, this.errorDisplay);
+        for (let i = 0; i < this.responseEvaluation.length; i++){
+          this.regrasComErro.push(this.responseEvaluation[i].idRegra);
+        }
+        this.regrasComErroString = this.arrayNumberToString(this.regrasComErro);
+        this.diretrizesPorDeficienciaComErro = dpdDAOComErro.getAll(this.regrasComErroString);
+        this.diretrizesPorDeficienciaSemErro = dpdDAOSemErro.getAllNot(this.regrasComErroString);
+        loadingAnalise.dismiss();
       }
     }).catch(error => {
       loadingEnv.dismiss();
@@ -141,4 +170,15 @@ export class ValidateFileExtensionPage {
     });
   }
 
+  public arrayNumberToString(a : Array<number>) : string{
+    let resposta : string = "";
+    for (let i = 0; i < a.length; i++){
+      if(i != a.length-1) {
+        resposta += a[i].toString() + ", ";
+      }else{
+        resposta += a[i].toString();
+      }
+    }
+    return resposta;
+  }
 }

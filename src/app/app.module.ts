@@ -31,6 +31,7 @@ import { RegraAtributoDaoProvider } from '../providers/dao/regra-atributo-dao';
 import { SeProvider } from '../providers/se/se';
 import { GeneralDaoProvider } from '../providers/general-dao/general-dao';
 import { ApiServerProvider } from '../providers/api-server/api-server';
+import { DiretrizesPorDeficienciaDaoProvider } from '../providers/dao/diretrizes-por-deficiencia-dao';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ApiServerProvider } from '../providers/api-server/api-server';
     SeProvider,
     SeProvider,
     GeneralDaoProvider,
-    ApiServerProvider
+    ApiServerProvider,
+    DiretrizesPorDeficienciaDaoProvider
   ]
 })
 export class AppModule {}

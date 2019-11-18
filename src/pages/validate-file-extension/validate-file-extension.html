@@ -19,32 +19,41 @@
 <!--  <p *ngIf="hasFile">URI: {{hasFile.uri}}</p>-->
 <!--  <p *ngIf="hasFile">DataURI: {{hasFile.dataURI}}</p>-->
 <!--  <p *ngIf="hasFile">MediaType: {{hasFile.mediaType}}</p>-->
+  <ion-title  class="bg-theme-2"><div class="line-break-down">Resumo da Avaliação:</div></ion-title>
   <ion-card>
     <ion-list>
-      <ion-list-header>
-        Resumo da Avaliação
-      </ion-list-header>
       <ion-item>
-        Foram avaliadas {{cRegrasAvaliadas}} regras de um total de {{(cRegrasNaoAvaliadas+cRegrasAvaliadas)}} regras.
+        <div class="line-break-down">Foram avaliadas {{cRegrasAvaliadas}} regras de um total de {{(cRegrasNaoAvaliadas+cRegrasAvaliadas)}} regras.</div>
       </ion-item>
       <ion-item>
-        O OA passou em {{cRegrasSemErro}} regras.
+        <div class="line-break-down">O OA passou em {{cRegrasSemErro}} regras.</div>
       </ion-item>
       <ion-item>
-        O OA não passou em {{cRegrasComErro}} regras.
+        <div  class="line-break-down">O OA não passou em {{cRegrasComErro}} regras.</div>
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-card>
+  <ion-title  class="bg-theme-2"><div class="line-break-down">Diretrizes Não Contempladas:</div></ion-title>
+  <ion-card *ngFor="let deficienciaAtual of diretrizesPorDeficienciaComErro">
     <ion-list>
       <ion-list-header>
-        List Header
+        <div class="ion-list-header line-break-down b-dotted-np">{{deficienciaAtual.descricaoDeficiencia}}</div>
       </ion-list-header>
-      <ion-item>
-        Regra 1
+      <ion-item *ngFor="let diretrizAtual of deficienciaAtual.diretrizes" class="line-break-down">
+        <div class="line-break-down">{{diretrizAtual.getDescricaoDiretriz()}}</div>
+        <div class="line-break-down">{{diretrizAtual.getRecomendacao()}}</div>
       </ion-item>
-      <ion-item>
-        regra 2
+    </ion-list>
+  </ion-card>
+  <ion-title  class="bg-theme-2"><div class="line-break-down">Diretrizes Contempladas:</div></ion-title>
+  <ion-card *ngFor="let deficienciaAtual2 of diretrizesPorDeficienciaSemErro">
+    <ion-list>
+      <ion-list-header>
+        <div class="ion-list-header line-break-down b-dotted-np">{{deficienciaAtual2.descricaoDeficiencia}}</div>
+      </ion-list-header>
+      <ion-item *ngFor="let diretrizAtual2 of deficienciaAtual2.diretrizes" class="line-break-down">
+        <div class="line-break-down">{{diretrizAtual2.getDescricaoDiretriz()}}</div>
+        <div class="line-break-down">{{diretrizAtual2.getRecomendacao()}}</div>
       </ion-item>
     </ion-list>
   </ion-card>
