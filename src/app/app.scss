@@ -75,6 +75,7 @@
 }
 .b-dotted-np{
   border-bottom: 3px dotted #7900ff;
+  margin-right: 8px;
 }
 .p-16{
   padding-right: 16px;
@@ -98,4 +99,12 @@
 .title-card{
   margin-bottom: 0 !important;
   min-height: 3.5rem;
+}
+ion-list-header .label-md{
+  margin-bottom: 0 !important;
+}
+
+ion-label.label-md, ion-label.label{
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }

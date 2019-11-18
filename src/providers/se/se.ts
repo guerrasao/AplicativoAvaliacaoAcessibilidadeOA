@@ -59,13 +59,13 @@ export class SeProvider {
       for (let i = 0; i < this.data.textos.length; i++) {
         var corTexto = this.data.textos[i].corDaFonte;
         var corFundoTexto = this.data.textos[i].corDeFundo;
-        var corFundoOA = this.data.corDeFundo;
+        var corFundoOA = '#'.concat(this.data.corDeFundo);
         if (corFundoTexto == "transparent") {
           corFundoTexto = corFundoOA;
         }
         // verificando se nao estao faltando os campos
         if(corTexto != "" && corFundoTexto != "") {
-          var contrast = getContrast.isAccessible('#'.concat(corTexto), '#'.concat(corFundoTexto));
+          var contrast = getContrast.isAccessible('#'.concat(corTexto), corFundoTexto);
           if (contrast == false) {
             conteudoComErro.push(this.data.textos[i].textoLinha);
           }
@@ -92,21 +92,25 @@ export class SeProvider {
     let titles: number = 0;
     if(this.data.tipo == "docx") {
       for (let i = 0; i < this.data.textos.length; i++) {
-        if (this.data.textos[i].titulo.indexOf("título") >= 0 ||
-          this.data.textos[i].titulo.indexOf("titulo") >= 0 ||
-          this.data.textos[i].titulo.indexOf("title") >= 0 ||
-          this.data.textos[i].titulo.indexOf("Ttulo") >= 0 ||
-          this.data.textos[i].titulo.indexOf("ttulo") >= 0
-        ) {
-          titles++;
+        if(this.data.textos[i].titulo != null){
+          if (this.data.textos[i].titulo.indexOf("título") >= 0 ||
+            this.data.textos[i].titulo.indexOf("titulo") >= 0 ||
+            this.data.textos[i].titulo.indexOf("title") >= 0 ||
+            this.data.textos[i].titulo.indexOf("Ttulo") >= 0 ||
+            this.data.textos[i].titulo.indexOf("ttulo") >= 0
+          ) {
+            titles++;
+          }
         }
         res = 0;
       }
     }else {
       if (this.data.tipo == "epub") {
         for (let i = 0; i < this.data.textos.length; i++) {
-          if (this.data.textos[i].tagEpub.indexOf("h") >= 0) {
-            titles++;
+          if(this.data.textos[i].tagEpub != null) {
+            if (this.data.textos[i].tagEpub.indexOf("h") >= 0) {
+              titles++;
+            }
           }
           res = 0;
         }
@@ -132,8 +136,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.textos.length; i++){
-      if(this.data.textos[i].alinhamentoTexto == "justify" ||  this.data.textos[i].alinhamentoTexto == "center"){
-        conteudoComErro.push(this.data.textos[i].textoLinha);
+      if(this.data.textos[i].alinhamentoTexto != null) {
+        if (this.data.textos[i].alinhamentoTexto == "justify" || this.data.textos[i].alinhamentoTexto == "center") {
+          conteudoComErro.push(this.data.textos[i].textoLinha);
+        }
       }
       res = 0;
     }
@@ -154,8 +160,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.imagens.length; i++){
-      if(this.data.imagens[i].tituloAlt == "" ||  this.data.imagens[i].descricaoAlt == ""){
-        conteudoComErro.push("imagem "+this.data.imagens[i].idImagem);
+      if(this.data.imagens[i].tituloAlt != null) {
+        if (this.data.imagens[i].tituloAlt == "" || this.data.imagens[i].descricaoAlt == "") {
+          conteudoComErro.push("imagem " + this.data.imagens[i].idImagem);
+        }
       }
       res = 0;
     }
@@ -176,8 +184,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.tabelas.length; i++){
-      if(this.data.tabelas[i].tituloAlt == ""){
-        conteudoComErro.push("tabela "+this.data.tabelas[i].idTabela);
+      if(this.data.tabelas[i].tituloAlt != null) {
+        if (this.data.tabelas[i].tituloAlt == "") {
+          conteudoComErro.push("tabela " + this.data.tabelas[i].idTabela);
+        }
       }
       res = 0;
     }
@@ -198,8 +208,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.tabelas.length; i++){
-      if(this.data.tabelas[i].descricaoAlt == ""){
-        conteudoComErro.push("tabela "+this.data.tabelas[i].idTabela);
+      if(this.data.tabelas[i].descricaoAlt != null) {
+        if (this.data.tabelas[i].descricaoAlt == "") {
+          conteudoComErro.push("tabela " + this.data.tabelas[i].idTabela);
+        }
       }
       res = 0;
     }
@@ -220,8 +232,10 @@ export class SeProvider {
     let conteudoComErro : Array<string> = new Array<string>();
     let res = -1;
     for (let i = 0; i < this.data.videos.length; i++){
-      if(this.data.videos[i].tituloAlt == ""){
-        conteudoComErro.push("video "+this.data.videos[i].idVideo);
+      if(this.data.videos[i].tituloAlt != null) {
+        if (this.data.videos[i].tituloAlt == "") {
+          conteudoComErro.push("video " + this.data.videos[i].idVideo);
+        }
       }
       res = 0;
     }
@@ -242,8 +256,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.videos.length; i++){
-      if(this.data.videos[i].descricaoAlt == ""){
-        conteudoComErro.push("video "+this.data.videos[i].idVideo);
+      if(this.data.videos[i].descricaoAlt != null) {
+        if (this.data.videos[i].descricaoAlt == "") {
+          conteudoComErro.push("video " + this.data.videos[i].idVideo);
+        }
       }
       res = 0;
     }
@@ -286,11 +302,13 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.graficos.length; i++){
-      if(this.data.graficos[i].tituloAlt.indexOf("sumário") < 0 &&
-        this.data.graficos[i].tituloAlt.indexOf("sumario") < 0 &&
-        this.data.graficos[i].tituloAlt.indexOf("sumary") < 0
-      ){
-        conteudoComErro.push("grafico "+this.data.graficos[i].idGrafico);
+      if(this.data.graficos[i].tituloAlt != null) {
+        if (this.data.graficos[i].tituloAlt.indexOf("sumário") < 0 &&
+          this.data.graficos[i].tituloAlt.indexOf("sumario") < 0 &&
+          this.data.graficos[i].tituloAlt.indexOf("sumary") < 0
+        ) {
+          conteudoComErro.push("grafico " + this.data.graficos[i].idGrafico);
+        }
       }
       res = 0;
     }
@@ -311,8 +329,10 @@ export class SeProvider {
     let res = -1;
     let conteudoComErro : Array<string> = new Array<string>();
     for (let i = 0; i < this.data.audios.length; i++){
-      if(this.data.audios[i].legenda == ""){
-        conteudoComErro.push("audio "+this.data.audios[i].idAudio);
+      if(this.data.audios[i].legenda != null) {
+        if (this.data.audios[i].legenda == "") {
+          conteudoComErro.push("audio " + this.data.audios[i].idAudio);
+        }
       }
       res = 0;
     }
