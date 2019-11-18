@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {DbProvider} from "../db/db";
 import {Midia_OA} from "../../models/Midia_OA";
 import {ErrorDisplayProvider} from "../error-display/error-display";
-import {SQLiteObject} from "@ionic-native/sqlite";
+// import {SQLiteObject} from "@ionic-native/sqlite";
 
 /*
   Generated class for the MidiaOaDaoProvider provider.

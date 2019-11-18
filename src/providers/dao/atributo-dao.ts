@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DbProvider} from "../db/db";
 import {Atributo} from "../../models/Atributo";
-import {SQLiteObject} from "@ionic-native/sqlite";
+// import {SQLiteObject} from "@ionic-native/sqlite";
 import {ErrorDisplayProvider} from "../error-display/error-display";
 
 /*

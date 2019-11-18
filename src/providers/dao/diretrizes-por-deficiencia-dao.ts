@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Regra} from "../../models/Regra";
+// import {Regra} from "../../models/Regra";
 import {DiretrizesPorDeficiencia} from "../../models/diretrizes-por-deficiencia";
 import {DbProvider} from "../db/db";
 import {ErrorDisplayProvider} from "../error-display/error-display";

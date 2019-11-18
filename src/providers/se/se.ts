@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Data } from "./Data";
-import {ErrorDisplayProvider} from "../error-display/error-display";
-import {GeneralDaoProvider} from "../general-dao/general-dao";
+// import {ErrorDisplayProvider} from "../error-display/error-display";
+// import {GeneralDaoProvider} from "../general-dao/general-dao";
 import {ResponseRuleModel} from "./ResponseRuleModel";
 import * as getContrast from "get-contrast/index.js"
 // import {OaDaoProvider} from "../dao/oa-dao";
@@ -33,8 +33,8 @@ export class SeProvider {
   public response : Array<ResponseRuleModel> = new Array<ResponseRuleModel>();
   public regrasAvaliadas : Array<number> = null;
   constructor(
-    private errorDisplay : ErrorDisplayProvider,
-    private generalDAO : GeneralDaoProvider,
+    // private errorDisplay : ErrorDisplayProvider,
+    // private generalDAO : GeneralDaoProvider,
 
     // vars only used in tests
     // private oaDAO : OaDaoProvider,
