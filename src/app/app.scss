@@ -73,6 +73,9 @@
   padding-bottom: 10px;
   border-bottom: 3px dotted #7900ff;
 }
+.b-dotted-theme-3{
+  border-bottom: 3px dotted #488aff;
+}
 .b-dotted-np{
   border-bottom: 3px dotted #7900ff;
   margin-right: 8px;
@@ -104,7 +107,67 @@ ion-list-header .label-md{
   margin-bottom: 0 !important;
 }
 
-ion-label.label-md, ion-label.label{
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
+.label-md, ion-label.label{
+  margin: 0 8px 0 0 !important;
+}
+
+.pt-10{
+  margin-top: 10px !important;
+}
+
+.bg-theme-3-light{
+  background-color: #aad9ff;
+}
+.bg-theme-3{
+  background-color: #488aff;
+}
+.bg-theme-4{
+  background-color: #da8800;
+}
+.mrl-8{
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.mb-25{
+  margin-bottom: 25px;
+}
+.bl-3{
+  border-left: 6px solid #488aff;
+}
+.bl-white{
+  border-left: 6px solid white;
+}
+.bl-4{
+  border-left: 6px solid #da8800;
+}
+.bg-theme-5{
+  background-color: #ac1b00;
+}
+.bg-theme-6{
+  background-color: #007069;
+}
+.bl-red{
+  border-left: 6px solid #ac1b00;
+}
+.mb-20{
+  margin-bottom: 20px;
+}
+.mb-10{
+  margin-bottom: 10px;
+}
+.mb-15{
+  margin-bottom: 12px;
+}
+.line-h-28{
+  line-height: 2.8rem;
+}
+.ptb-10{
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+.mt-25{
+  margin-top: 25px;
+}
+.ml-5{
+  margin-left: 5px;
 }

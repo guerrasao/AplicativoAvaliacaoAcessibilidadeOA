@@ -14,8 +14,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-title  class="bg-theme-2 m-10"><div class="line-break-down">Grupos de Pesquisa envolvidos neste projeto:</div></ion-title>
-  <ion-card class="border-radius">
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title  class="bg-theme-2"><div class="line-break-down ptb-5">Grupos de Pesquisa envolvidos neste projeto:</div></ion-title>
+  </ion-card>
+  <ion-card class="border-radius mb-20">
     <ion-card-header>
       <div class="flex justify-center  b-dotted">
         <img src="assets/imgs/brasao-ufsm.png" class="img-45 mb-5"/>
@@ -28,7 +30,7 @@
     <p>Desenvolvimento e Inovação em Reabilitação e Tecnologia Assistiva IATE - Inteligência Artificial e Tecnologia Educacional</p>
     </ion-card-content>
   </ion-card>
-  <ion-card class="border-radius">
+  <ion-card class="border-radius mb-20">
     <ion-card-header>
       <div class="flex justify-center b-dotted">
         <img src="assets/imgs/brasao_ufsc.png" class="img-45 mb-5"/>
@@ -41,6 +43,52 @@
       <p>Núcleo de Acessibilidade Digital e Tecnologias Assistivas</p>
     </ion-card-content>
   </ion-card>
-<!--  <p>Em caso de erro Restaure o Banco de Dados Através do Botão Restaurar e após feche e abra novamente o aplicativo. </p>-->
-<!--  <button ion-button (click)="deleteDB()" >Restaurar Banco de Dados</button>-->
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title class="bg-theme-2"><div class="line-break-down ptb-5">Desenvolvedor:</div></ion-title>
+  </ion-card>
+  <ion-card class="border-radius mb-15">
+    <ion-card-header>
+      <ion-card-title class="line-break-down b-dotted">
+        <p class="font-title-h4">Patrick A. C. Guerra</p>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><b>Curso:</b> Bacharelado em Sistemas de Informação - UFSM/FW</p>
+      <p><b>Email:</b> <a href="mailto:patryckguerra@yahoo.com.br">patryckguerra@yahoo.com.br</a></p>
+      <p><b>GitHub:</b> <a href="https://github.com/guerrasao">https://github.com/guerrasao</a></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title class="bg-theme-2"><div class="line-break-down ptb-5">Versão:</div></ion-title>
+  </ion-card>
+
+  <ion-card class="border-radius mb-20">
+    <ion-card-header>
+      <div class="flex justify-center b-dotted">
+        <img src="assets/imgs/logo.png" class="img-45 mb-5"/>
+      </div>
+      <ion-card-title class="line-break-down b-dotted">
+        <p class="font-title-h4">AAOA-App</p>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><b>Versão:</b> 1.2.0</p>
+      <p><b>Data de publicação:</b> 18/11/2019</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title class="bg-theme-5"><div class="line-break-down ptb-5">Recuperação do BD:</div></ion-title>
+  </ion-card>
+  <ion-card class="bl-3">
+    <ion-list>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down">Caso tenha fechado o aplicativo durante a primeira execução após a instalação, o BD pode estar corrompido. Para recuperação do Banco de Dados, selecione o Botão Restaurar BD e após 10 segundos feche e abra novamente o aplicativo.</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <div class="mrl-8">
+    <button ion-button (click)="deleteDB()" full>Restaurar BD</button>
+  </div>
 </ion-content>

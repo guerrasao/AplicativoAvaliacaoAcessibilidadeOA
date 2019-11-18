@@ -59,6 +59,27 @@ export class DiretrizesPorDeficienciaDaoProvider {
     return this.diretrizesPorDeficiencias;
   }
 
+  public getAllNotIn() : Array<DiretrizesPorDeficiencia>{
+    let sql = 'select Deficiencia.idDeficiencia, Deficiencia.descricaoDeficiencia, Diretriz.idDiretriz, Diretriz.idMidia, Diretriz.descricaoDiretriz, Diretriz.recomendacao, Regra.idRegra, Regra.descricaoRegra ' +
+      'from Deficiencia, Diretriz_Deficiencia, Diretriz, Regra ' +
+      'where Diretriz.idDiretriz = Diretriz_Deficiencia.idDiretriz AND Diretriz_Deficiencia.idDeficiencia = Deficiencia.idDeficiencia AND Regra.idDiretriz = Diretriz.idDiretriz';
+    let data : any[];
+    this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {
+      if(data.rows.length > 0){
+        for (var i = 0; i < data.rows.length; i++){
+          let tmp = data.rows.item(i);
+          this.adicionarDeficiencia(tmp.idDeficiencia, tmp.descricaoDeficiencia);
+          this.adicionarDiretriz(tmp.idDeficiencia, tmp.idDiretriz, tmp.idMidia, tmp.descricaoDiretriz, tmp.recomendacao);
+        }
+        return this.diretrizesPorDeficiencias;
+      }
+    }).catch( e => {
+      this.errorDisplay.presentAlertError(e);
+      return null;
+    });
+    return this.diretrizesPorDeficiencias;
+  }
+
   private pesquisaDeficiencia(idDeficiencia : number) : number{
     let resp : number = -1;
     for (let i = 0; i < this.diretrizesPorDeficiencias.length; i++){

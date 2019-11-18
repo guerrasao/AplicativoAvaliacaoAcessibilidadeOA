@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {DbProvider} from "../../providers/db/db";
+import {ErrorDisplayProvider} from "../../providers/error-display/error-display";
 
 /**
  * Generated class for the AboutPage page.
@@ -15,7 +16,7 @@ import {DbProvider} from "../../providers/db/db";
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dbprovider : DbProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dbprovider : DbProvider, private errorDisplay : ErrorDisplayProvider,) {
   }
 
   ionViewDidLoad() {
@@ -24,7 +25,9 @@ export class AboutPage {
 
   public deleteDB(){
     this.dbprovider.dbConection.close();
-    this.dbprovider.deleteDB();
+    this.dbprovider.deleteDB().then(() => {
+      this.errorDisplay.presentAlert('Aviso','Limpeza do BD concluida, feche completamente o aplicativo e ao inicia-lo novamente o BD será restaurado.');
+    });
   }
 
 }

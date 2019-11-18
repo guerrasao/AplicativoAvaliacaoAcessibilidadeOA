@@ -12,6 +12,7 @@ import {AboutPage} from "../pages/about/about";
 import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 import {DbProvider} from "../providers/db/db";
 import {ErrorDisplayProvider} from "../providers/error-display/error-display";
+import {GuidelinesPage} from "../pages/guidelines/guidelines";
 
 @Component({
   templateUrl: 'app.html'
@@ -39,6 +40,7 @@ export class MyApp {
       { title: 'Início', component: HelloIonicPage },
       { title: 'Avaliar OA', component: LoEvaluationPage },
       //{ title: 'My First List', component: ListPage },
+      { title: 'Diretrizes', component: GuidelinesPage},
       { title: 'Sobre', component: AboutPage }
     ];
   }

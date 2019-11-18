@@ -19,44 +19,76 @@
 <!--  <p *ngIf="hasFile">URI: {{hasFile.uri}}</p>-->
 <!--  <p *ngIf="hasFile">DataURI: {{hasFile.dataURI}}</p>-->
 <!--  <p *ngIf="hasFile">MediaType: {{hasFile.mediaType}}</p>-->
-  <ion-title  class="bg-theme-2"><div class="line-break-down ptb-5">Resumo da Avaliação:</div></ion-title>
-  <ion-card>
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title  class="bg-theme-3" *ngIf="(cRegrasAvaliadas+cRegrasNaoAvaliadas) > 0">
+      <div class="line-break-down ptb-5">Resumo da Avaliação:</div>
+    </ion-title>
+  </ion-card>
+
+  <ion-card *ngIf="(cRegrasAvaliadas+cRegrasNaoAvaliadas) > 0" class="bl-3 mb-15">
     <ion-list>
-      <ion-item>
-        <div class="line-break-down">Foram avaliadas {{cRegrasAvaliadas}} regras de um total de {{(cRegrasNaoAvaliadas+cRegrasAvaliadas)}} regras.</div>
-      </ion-item>
-      <ion-item>
-        <div class="line-break-down">O OA passou em {{cRegrasSemErro}} regras.</div>
-      </ion-item>
-      <ion-item>
-        <div  class="line-break-down">O OA não passou em {{cRegrasComErro}} regras.</div>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down">Foram avaliadas {{cRegrasAvaliadas}} regras de um total de {{(cRegrasNaoAvaliadas+cRegrasAvaliadas)}} regras.</p>
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-title  class="bg-theme-2 ptb-5" *ngIf="diretrizesPorDeficienciaComErro != null && diretrizesPorDeficienciaComErro.length > 0"><div class="line-break-down">Diretrizes Não Contempladas:</div></ion-title>
-  <ion-card *ngFor="let deficienciaAtual of diretrizesPorDeficienciaComErro">
+  <ion-card *ngIf="(cRegrasAvaliadas+cRegrasNaoAvaliadas) > 0" class="bl-3 mb-15">
     <ion-list>
-      <ion-list-header class="title-card">
-        <div class="line-break-down b-dotted-np">{{deficienciaAtual.descricaoDeficiencia}}</div>
-      </ion-list-header>
-      <ion-item *ngFor="let diretrizAtual of deficienciaAtual.diretrizes" class="line-break-down">
-        <div class="line-break-down">{{diretrizAtual.getDescricaoDiretriz()}}</div>
-<!--        <div class="line-break-down">{{diretrizAtual.getRecomendacao()}}</div>-->
-        <hr>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down">O OA passou em {{cRegrasSemErro}} regras.</p>
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-title  class="bg-theme-2 ptb-5" *ngIf="diretrizesPorDeficienciaSemErro != null && diretrizesPorDeficienciaSemErro.length > 0"><div class="line-break-down" >Diretrizes Contempladas:</div></ion-title>
-  <ion-card *ngFor="let deficienciaAtual2 of diretrizesPorDeficienciaSemErro">
+  <ion-card *ngIf="(cRegrasAvaliadas+cRegrasNaoAvaliadas) > 0" class="bl-3 mb-15">
     <ion-list>
-      <ion-list-header class="title-card">
-        <div class="line-break-down b-dotted-np">{{deficienciaAtual2.descricaoDeficiencia}}</div>
-      </ion-list-header>
-      <ion-item *ngFor="let diretrizAtual2 of deficienciaAtual2.diretrizes" class="line-break-down">
-        <div class="line-break-down">{{diretrizAtual2.getDescricaoDiretriz()}}</div>
-<!--        <div class="line-break-down">{{diretrizAtual2.getRecomendacao()}}</div>-->
-        <hr>
+      <ion-item class="pt-10 ptb-10 mb-15">
+        <p class="line-break-down">O OA não passou em {{cRegrasComErro}} regras.</p>
       </ion-item>
     </ion-list>
   </ion-card>
+  <ion-card *ngIf="(cRegrasAvaliadas+cRegrasNaoAvaliadas) > 0" class="bl-3 mb-15">
+    <ion-list>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down">Abaixo está a lista de diretrizes contempladas ou não no OA, agrupadas por deficiência.</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title  class="bg-theme-5"  *ngIf="diretrizesPorDeficienciaComErro != null && diretrizesPorDeficienciaComErro.length > 0">
+      <div class="line-break-down ptb-5">Diretrizes Não Contempladas:</div>
+    </ion-title>
+  </ion-card>
+
+  <div *ngFor="let deficienciaAtual of diretrizesPorDeficienciaComErro" class="mb-15">
+    <ion-card class="mb-10 bl-white line-h-28 mt-25">
+      <ion-title class="bg-theme-4"><div class="line-break-down ptb-5">{{deficienciaAtual.descricaoDeficiencia}}</div></ion-title>
+    </ion-card>
+    <ion-card class="bl-4 mb-15" *ngFor="let diretrizAtual of deficienciaAtual.diretrizes">
+      <ion-list>
+        <ion-item class="pt-10 ptb-10">
+          <p class="line-break-down">{{diretrizAtual.getDescricaoDiretriz()}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title  class="bg-theme-6"  *ngIf="diretrizesPorDeficienciaSemErro != null && diretrizesPorDeficienciaSemErro.length > 0">
+      <div class="line-break-down ptb-5">Diretrizes Contempladas:</div>
+    </ion-title>
+  </ion-card>
+
+  <div *ngFor="let deficienciaAtual2 of diretrizesPorDeficienciaSemErro">
+    <ion-card class="mb-10 bl-white line-h-28 mt-25">
+      <ion-title class="bg-theme-4"><div class="line-break-down ptb-5">{{deficienciaAtual2.descricaoDeficiencia}}</div></ion-title>
+    </ion-card>
+    <ion-card class="bl-4 mb-15" *ngFor="let diretrizAtual2 of deficienciaAtual2.diretrizes">
+      <ion-list>
+        <ion-item class="pt-10 ptb-10">
+          <p class="line-break-down">{{diretrizAtual2.getDescricaoDiretriz()}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
 </ion-content>

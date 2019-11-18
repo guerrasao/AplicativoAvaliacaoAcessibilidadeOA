@@ -154,6 +154,8 @@ export class ValidateFileExtensionPage {
         this.diretrizesPorDeficienciaComErro = dpdDAOComErro.getAll(this.regrasComErroString);
         this.diretrizesPorDeficienciaSemErro = dpdDAOSemErro.getAllNot(this.regrasComErroString);
         loadingAnalise.dismiss();
+      }else{
+        this.errorDisplay.presentAlert('Erro', 'Arquivo foi recebido no servidor mas não foi possível extrair os parâmetros do OA.');
       }
     }).catch(error => {
       loadingEnv.dismiss();

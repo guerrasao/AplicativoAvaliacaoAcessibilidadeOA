@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-//import {formattedError} from "@angular/compiler";
+import {formattedError} from "@angular/compiler";
 /*
   Generated class for the ErrorDisplayProvider provider.
 
@@ -15,12 +15,12 @@ export class ErrorDisplayProvider {
   }
 
   presentAlertError(error : any) {
-    // let alert = this.alertCtrl.create({
-    //   title: 'Erro',
-    //   subTitle: formattedError(error).toString(),
-    //   buttons: ['OK']
-    // });
-    // alert.present();
+    let alert = this.alertCtrl.create({
+      title: 'Erro',
+      subTitle: formattedError(error).toString(),
+      buttons: ['OK']
+    });
+    alert.present();
     console.error(error);
     //alert(error.toString());
   }

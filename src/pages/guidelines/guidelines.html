@@ -1,0 +1,35 @@
+<!--
+  Generated template for the GuidelinesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Diretrizes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title  class="bg-theme-2" *ngIf="diretrizesPorDeficiencia != null && diretrizesPorDeficiencia.length > 0">
+      <div class="line-break-down ptb-5">Diretrizes Classificadas por Deficiência:</div>
+    </ion-title>
+  </ion-card>
+  <div *ngFor="let deficienciaAtual of diretrizesPorDeficiencia">
+    <ion-card class="mb-10 bl-white line-h-28 mt-25">
+      <ion-title class="bg-theme-4"><div class="line-break-down ptb-5">{{deficienciaAtual.descricaoDeficiencia}}</div></ion-title>
+    </ion-card>
+    <ion-card class="bl-4 mb-15" *ngFor="let diretrizAtual of deficienciaAtual.diretrizes">
+      <ion-list>
+        <ion-item class="pt-10 ptb-10">
+          <p class="line-break-down">{{diretrizAtual.getDescricaoDiretriz()}}</p>
+<!--          <p class="line-break-down">{{diretrizAtual.getRecomendacao()}}</p>-->
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+</ion-content>

@@ -9,14 +9,44 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Escolher Arquivo</ion-title>
+    <ion-title>Escolha do Arquivo</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>Instruções...</p>
-  <button ion-button (click)="openFileChooser()" >Selecionar Arquivo</button>
-  <p *ngIf="errorr">{{errorr}}</p>
-  <p *ngIf="tmpFile">{{tmpFile.name}}</p>
-  <button ion-button *ngIf="tmpFile" (click)="nextPage()" >Próximo</button>
+  <ion-card class="mb-20 bl-white line-h-28">
+    <ion-title class="bg-theme-3"><div class="line-break-down ptb-5">Instruções:</div></ion-title>
+  </ion-card>
+  <ion-card class="bl-3 mb-15">
+    <ion-list>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down">Ao selecionar a opção Selecionar Arquivo, escolha um arquivo no formato docx ou epub. Será exibido o nome do arquivo se este possui um dos formatos válidos.</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <div class="mrl-8">
+    <button ion-button (click)="openFileChooser()" full>Selecionar Arquivo</button>
+  </div>
+  <ion-card class="bl-3 mb-15" *ngIf="tmpFile">
+    <ion-list>
+      <ion-item class="pt-10 ptb-10">
+        <p class="line-break-down"><b>Nome do Arquivo:</b> {{tmpFile.name}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <div class="mrl-8">
+    <button ion-button *ngIf="tmpFile" (click)="nextPage()" full>Próximo</button>
+  </div>
+  <div *ngIf="errorr">
+    <ion-card class="mb-20 bl-white line-h-28">
+      <ion-title class="bg-theme-5"><div class="line-break-down ptb-5">Erro:</div></ion-title>
+    </ion-card>
+    <ion-card class="bl-red mb-15">
+      <ion-list>
+        <ion-item class="pt-10 ptb-10">
+          <p class="line-break-down">{{errorr}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
 </ion-content>
