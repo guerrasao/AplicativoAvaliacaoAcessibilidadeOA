@@ -110,10 +110,15 @@ export class ValidateFileExtensionPage {
       loadingEnv.dismiss();
       if(resp.status == 200){
         // show loading
+
         let loadingAnalise = this.loadingCtrl.create({
           content: 'Resposta recebida, avaliando Objeto de Aprendizagem...'
         });
         loadingAnalise.present();
+        //
+        setTimeout(() => {
+          loadingAnalise.dismiss();
+        }, 60000);
         // arquivo enviado e recebida a resposta do server
         //resp.data
         let se = this.seProvider = new SeProvider(
