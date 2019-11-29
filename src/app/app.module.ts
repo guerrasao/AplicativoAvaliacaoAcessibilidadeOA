@@ -33,6 +33,7 @@ import { GeneralDaoProvider } from '../providers/general-dao/general-dao';
 import { ApiServerProvider } from '../providers/api-server/api-server';
 import { DiretrizesPorDeficienciaDaoProvider } from '../providers/dao/diretrizes-por-deficiencia-dao';
 import {GuidelinesPage} from "../pages/guidelines/guidelines";
+import {AuthPage} from "../pages/auth/auth";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {GuidelinesPage} from "../pages/guidelines/guidelines";
     FileChooserPage,
     LoEvaluationPage,
     ValidateFileExtensionPage,
-    GuidelinesPage
+    GuidelinesPage,
+    AuthPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import {GuidelinesPage} from "../pages/guidelines/guidelines";
     FileChooserPage,
     LoEvaluationPage,
     ValidateFileExtensionPage,
-    GuidelinesPage
+    GuidelinesPage,
+    AuthPage
   ],
   providers: [
     StatusBar,

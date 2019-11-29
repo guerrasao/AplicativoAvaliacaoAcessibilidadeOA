@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {DbProvider} from "../db/db";
 import {Deficiencia} from "../../models/Deficiencia";
 import {ErrorDisplayProvider} from "../error-display/error-display";
-// import {SQLiteObject} from "@ionic-native/sqlite";
+import {SQLiteObject} from "@ionic-native/sqlite";
 
 /*
   Generated class for the DeficienciaDaoProvider provider.
@@ -18,35 +18,29 @@ export class DeficienciaDaoProvider {
 
   }
 
-  // public insert(deficiencia : Deficiencia) : void{
-  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
-  //     let sql = 'insert into '+this.table+'(idDeficiencia, descricaoDeficiencia) values (?, ?)';
-  //     let data = [deficiencia.getIdDeficiencia(), deficiencia.getDescricaoDeficiencia()];
-  //     db.executeSql(sql, data).then(() => {
-  //       console.log(this.table+" inserido(a)");
-  //     }).catch( e => this.errorDisplay.presentAlertError(e));
-  //   }).catch( e => this.errorDisplay.presentAlertError(e));
-  // }
-  //
-  // public remove(idDeficiencia : number) : void{
-  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
-  //     let sql = 'delete from '+this.table+' where idDeficiencia = ?';
-  //     let data = [idDeficiencia];
-  //     db.executeSql(sql, data).then(() => {
-  //       console.log(this.table+" removido(a)");
-  //     }).catch( e => this.errorDisplay.presentAlertError(e));
-  //   }).catch( e => this.errorDisplay.presentAlertError(e));
-  // }
-  //
-  // public update(deficiencia : Deficiencia) : void{
-  //   this.dbProvider.getDB().then((db : SQLiteObject) =>{
-  //     let sql = 'update '+this.table+' set idDeficiencia = ?, descricaoDeficiencia = ? where idDeficiencia = ?';
-  //     let data = [deficiencia.getIdDeficiencia(), deficiencia.getDescricaoDeficiencia(), deficiencia.getIdDeficiencia()];
-  //     db.executeSql(sql, data).then(() => {
-  //       console.log(this.table+" atualizado(a)");
-  //     }).catch( e => this.errorDisplay.presentAlertError(e));
-  //   }).catch( e => this.errorDisplay.presentAlertError(e));
-  // }
+  public insert(deficiencia : Deficiencia) : void{
+      let sql = 'insert into '+this.table+'(idDeficiencia, descricaoDeficiencia) values (?, ?)';
+      let data = [deficiencia.getIdDeficiencia(), deficiencia.getDescricaoDeficiencia()];
+      this.dbProvider.dbConection.executeSql(sql, data).then(() => {
+
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+  }
+
+  public remove(idDeficiencia : number) : void{
+      let sql = 'delete from '+this.table+' where idDeficiencia = ?';
+      let data = [idDeficiencia];
+      this.dbProvider.dbConection.executeSql(sql, data).then(() => {
+
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+  }
+
+  public update(deficiencia : Deficiencia) : void{
+      let sql = 'update '+this.table+' set descricaoDeficiencia = ? where idDeficiencia = ?';
+      let data = [deficiencia.getDescricaoDeficiencia(), deficiencia.getIdDeficiencia()];
+      this.dbProvider.dbConection.executeSql(sql, data).then(() => {
+
+      }).catch( e => this.errorDisplay.presentAlertError(e));
+  }
 
   public getAll() : Array<Deficiencia>{
     let sql = 'select * from '+this.table;
@@ -67,9 +61,9 @@ export class DeficienciaDaoProvider {
     });
     return deficiencias;
   }
-// let sql = 'select * from '+this.table+' where '+where;
+
   public getAllWhere(where : string) : Array<Deficiencia>{
-    let sql = 'select * from '+this.table;
+    let sql = 'select * from '+this.table+' where '+where;
     let data : any[];
     let deficiencias = new Array<Deficiencia>();
     this.dbProvider.dbConection.executeSql(sql, data).then((data : any) => {

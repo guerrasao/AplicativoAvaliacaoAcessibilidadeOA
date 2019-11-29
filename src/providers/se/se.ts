@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Data } from "./Data";
-// import {ErrorDisplayProvider} from "../error-display/error-display";
+import {ErrorDisplayProvider} from "../error-display/error-display";
 // import {GeneralDaoProvider} from "../general-dao/general-dao";
 import {ResponseRuleModel} from "./ResponseRuleModel";
 import * as getContrast from "get-contrast/index.js"
@@ -32,8 +32,9 @@ export class SeProvider {
   private data : Data = new Data();
   public response : Array<ResponseRuleModel> = new Array<ResponseRuleModel>();
   public regrasAvaliadas : Array<number> = null;
+  public errosExibidos : number = 0;
   constructor(
-    // private errorDisplay : ErrorDisplayProvider,
+    private errorDisplay : ErrorDisplayProvider,
     // private generalDAO : GeneralDaoProvider,
 
     // vars only used in tests
@@ -59,13 +60,27 @@ export class SeProvider {
       for (let i = 0; i < this.data.textos.length; i++) {
         var corTexto = this.data.textos[i].corDaFonte;
         var corFundoTexto = this.data.textos[i].corDeFundo;
+        if(corFundoTexto == "" || corFundoTexto == null || corFundoTexto == "auto"){
+          corFundoTexto = "FFFFFF";
+        }
+        if(this.data.corDeFundo == "" || this.data.corDeFundo == null){
+          this.data.corDeFundo = "FFFFFF";
+        }
         var corFundoOA = '#'.concat(this.data.corDeFundo);
-        if (corFundoTexto == "transparent") {
+        if (corFundoTexto == "transparent" || corFundoTexto == "" || corFundoTexto == "auto") {
           corFundoTexto = corFundoOA;
         }
         // verificando se nao estao faltando os campos
-        if(corTexto != "" && corFundoTexto != "") {
-          var contrast = getContrast.isAccessible('#'.concat(corTexto), corFundoTexto);
+        if(corTexto != "" && corFundoTexto != "" && corTexto != null && corFundoTexto != null && corTexto != "auto") {
+          var contrast = false;
+          try{
+            contrast = getContrast.isAccessible('#'.concat(corTexto), corFundoTexto);
+          }catch (e) {
+            if(this.errosExibidos < 5){
+              this.errorDisplay.presentAlertError(e);
+              this.errosExibidos++;
+            }
+          }
           if (contrast == false) {
             conteudoComErro.push(this.data.textos[i].textoLinha);
           }

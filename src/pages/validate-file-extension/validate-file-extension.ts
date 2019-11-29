@@ -122,7 +122,7 @@ export class ValidateFileExtensionPage {
         // arquivo enviado e recebida a resposta do server
         //resp.data
         let se = this.seProvider = new SeProvider(
-          // this.errorDisplay,
+          this.errorDisplay,
           // this.generalDAO,
           // this.oaDAO,
           // this.regraAtributoDAO,
