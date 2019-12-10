@@ -42,7 +42,7 @@ export class MyApp {
       { title: 'Avaliar OA', component: LoEvaluationPage },
       //{ title: 'My First List', component: ListPage },
       { title: 'Diretrizes', component: GuidelinesPage},
-      { title: 'Manutenção da base de conhecimento', component:AuthPage},
+      // { title: 'Manutenção da base de conhecimento', component:AuthPage},
       { title: 'Sobre', component: AboutPage }
     ];
   }

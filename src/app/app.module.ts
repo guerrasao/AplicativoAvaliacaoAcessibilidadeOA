@@ -63,7 +63,7 @@ import {AuthPage} from "../pages/auth/auth";
     LoEvaluationPage,
     ValidateFileExtensionPage,
     GuidelinesPage,
-    AuthPage
+    // AuthPage
   ],
   providers: [
     StatusBar,
