@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {DbProvider} from "../../providers/db/db";
 import {ErrorDisplayProvider} from "../../providers/error-display/error-display";
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 /**
  * Generated class for the AboutPage page.
@@ -16,11 +17,12 @@ import {ErrorDisplayProvider} from "../../providers/error-display/error-display"
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dbprovider : DbProvider, private errorDisplay : ErrorDisplayProvider,) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dbprovider : DbProvider, private errorDisplay : ErrorDisplayProvider, private screenOrientation: ScreenOrientation) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AboutPage');
+    this.screenOrientation.lock('portrait');
   }
 
   public deleteDB(){

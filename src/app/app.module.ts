@@ -34,6 +34,7 @@ import { ApiServerProvider } from '../providers/api-server/api-server';
 import { DiretrizesPorDeficienciaDaoProvider } from '../providers/dao/diretrizes-por-deficiencia-dao';
 import {GuidelinesPage} from "../pages/guidelines/guidelines";
 import {AuthPage} from "../pages/auth/auth";
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import {AuthPage} from "../pages/auth/auth";
     SeProvider,
     GeneralDaoProvider,
     ApiServerProvider,
-    DiretrizesPorDeficienciaDaoProvider
+    DiretrizesPorDeficienciaDaoProvider,
+    ScreenOrientation
   ]
 })
 export class AppModule {}
