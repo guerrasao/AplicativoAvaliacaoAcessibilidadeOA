@@ -13,7 +13,7 @@ import {LoEvaluationPage} from "../pages/lo-evaluation/lo-evaluation";
 import {DbProvider} from "../providers/db/db";
 import {ErrorDisplayProvider} from "../providers/error-display/error-display";
 import {GuidelinesPage} from "../pages/guidelines/guidelines";
-import {AuthPage} from "../pages/auth/auth";
+// import {AuthPage} from "../pages/auth/auth";
 
 @Component({
   templateUrl: 'app.html'
